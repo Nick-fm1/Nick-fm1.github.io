@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="es" class="no-js">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portafolio de Sebastián Moreno — Desarrollador Web especialista en UX/UI, Frontend y Productos Full-Stack.">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="color-scheme" content="dark light">
+
+  <!-- Open Graph / Redes Sociales -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Sebastián Moreno — Web & Product Developer">
+  <meta property="og:description" content="Diseño experiencias claras y las convierto en productos digitales escalables.">
+  <meta property="og:image" content="og-image.png">
+
+  <title>Sebastián Moreno — Web & Product Developer</title>
+
+  <!-- Preconexión a fuentes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Carga del visor 3D en tiempo real con crossorigin corregido -->
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js" crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Salto de navegación para accesibilidad -->
+  <a class="skip-link" href="#contenido">Saltar al contenido principal</a>
+
+  <!-- Encabezado de Navegación -->
+  <header class="site-header" id="site-header">
+    <nav class="nav container" aria-label="Navegación principal">
+      <a class="brand" href="#inicio" aria-label="Inicio de Sebastián Moreno">
+        SM<span class="brand-dot" aria-hidden="true">.</span>
+      </a>
+
+      <!-- Controles de Navegación + Modo Oscuro/Claro -->
+      <div class="nav-actions">
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Cambiar tema de color" title="Cambiar tema">
+          <svg class="sun-icon" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+          <svg class="moon-icon" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+
+        <button class="menu-button" id="menu-button" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-links">
+          <span class="menu-line"></span>
+          <span class="menu-line"></span>
+        </button>
+      </div>
+
+      <div class="nav-links" id="nav-links">
+        <a href="#proyectos" class="nav-item">Proyectos</a>
+        <a href="#proceso" class="nav-item">Proceso</a>
+        <a href="#sobre-mi" class="nav-item">Sobre mí</a>
+        <a href="#contacto" class="button button-nav">Hablemos</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="contenido">
+    <!-- Hero Section -->
+    <section class="hero container" id="inicio">
+      <div class="badge-status">
+        <span class="status-dot pulsating" aria-hidden="true"></span>
+        <span>Disponible para proyectos y roles full-time</span>
+      </div>
+
+      <div class="hero-grid">
+        <div class="hero-text">
+          <h1 class="hero-title">
+            Diseño experiencias claras.<br>
+            <em class="highlight">Las convierto en producto.</em>
+          </h1>
+          <p class="hero-copy">
+            Soy <strong>Sebastián Moreno</strong>, desarrollador web enfocado en <strong>UX/UI, Frontend y soluciones Full-Stack</strong>. Transformo problemas complejos en experiencias digitales funcionales, accesibles y listas para escalar.
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#proyectos">
+              Ver proyectos <span class="icon-arrow" aria-hidden="true">↓</span>
+            </a>
+            <a class="button button-outline" href="#contacto">
+              Hablemos de tu idea <span class="icon-arrow" aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Visualizador 3D Interactivo en el Hero -->
+        <div class="hero-3d-wrapper" aria-label="Visualizador 3D Interactivo">
+          <div class="glow-backdrop" aria-hidden="true"></div>
+
+          <model-viewer
+            id="hero-model"
+            src="https://modelviewer.dev/shared-assets/models/Astronaut.glb"
+            alt="Objeto 3D interactivo de Sebastián Moreno"
+            auto-rotate
+            rotation-per-second="15deg"
+            camera-controls
+            disable-zoom
+            shadow-intensity="1.5"
+            shadow-softness="0.8"
+            exposure="1.1"
+            interaction-prompt="none"
+            loading="eager">
+            
+            <div class="badge-3d-hint" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+              <span>3D Interactivo · Arrastra para girar</span>
+            </div>
+          </model-viewer>
+        </div>
+      </div>
+
+      <div class="stack-bar" aria-label="Tecnologías principales">
+        <span class="stack-tag">UX/UI</span>
+        <span class="stack-tag">FRONTEND</span>
+        <span class="stack-tag">FULL-STACK</span>
+        <span class="stack-tag">WEB DESIGN</span>
+      </div>
+    </section>
+
+    <!-- Sección Proyectos -->
+    <section class="section container" id="proyectos">
+      <header class="section-heading">
+        <div>
+          <p class="eyebrow">Trabajo Seleccionado</p>
+          <h2>Proyectos con problema, criterio y resultado</h2>
+        </div>
+        <p class="section-desc">
+          Un caso de estudio no muestra solo pantallas: explica la estrategia, la arquitectura técnica y el impacto real.
+        </p>
+      </header>
+
+      <!-- Proyecto Destacado con Modelo 3D -->
+      <article class="project project-featured">
+        <div class="project-visual audit-visual" aria-label="Visualización 3D para ARDO Marketing">
+          <div class="browser-chrome" aria-hidden="true">
+            <span class="browser-dot red"></span>
+            <span class="browser-dot yellow"></span>
+            <span class="browser-dot green"></span>
+            <span class="browser-url">3d-audit / ardo-marketing.com</span>
+          </div>
+          
+          <div class="project-3d-container">
+            <model-viewer
+              id="project-model"
+              src="https://modelviewer.dev/shared-assets/models/NeilArmstrong.glb"
+              alt="Modelo 3D del caso ARDO"
+              auto-rotate
+              camera-controls
+              disable-zoom
+              shadow-intensity="1"
+              exposure="1.0">
+            </model-viewer>
+          </div>
+        </div>
+
+        <div class="project-copy">
+          <p class="project-number">01 / Caso de Estudio UX</p>
+          <h3>ARDO Marketing: Optimización de conversión y UX móvil</h3>
+          <p>Auditoría integral para detectar fricciones en los embudos de conversión, rendimiento técnico y arquitectura de información.</p>
+          
+          <ul class="tags-list" aria-label="Tecnologías y habilidades">
+            <li>UX AUDIT</li>
+            <li>RESPONSIVE DESIGN</li>
+            <li>CRO & CONVERSIÓN</li>
+          </ul>
+
+          <button class="button button-secondary" type="button" data-dialog-open="ardo-dialog">
+            Ver detalle del caso <span aria-hidden="true">↗</span>
+          </button>
+        </div>
+      </article>
+
+      <!-- Próximos Proyectos Grid -->
+      <div class="project-grid">
+        <article class="project project-card">
+          <span class="status-badge">En desarrollo</span>
+          <p class="project-number">02 / Full-Stack</p>
+          <h3>SaaS / Plataforma Web</h3>
+          <p>Aplicación completa end-to-end enfocada en gestión de flujos de trabajo, autenticación segura y persistencia de datos.</p>
+        </article>
+
+        <article class="project project-card">
+          <span class="status-badge">En desarrollo</span>
+          <p class="project-number">03 / Onboarding UX</p>
+          <h3>Experiencia de Producto Digital</h3>
+          <p>Flujo optimizado para reducir la fricción en el primer uso de una app y acelerar la retención del usuario.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Sección Proceso -->
+    <section class="section process-section" id="proceso">
+      <div class="container">
+        <p class="eyebrow">Mi Metodología</p>
+        <div class="process-intro">
+          <h2>Menos suposiciones.<br>Mejores decisiones.</h2>
+          <p>Integro visión de negocio, diseño de interfaces y desarrollo limpio para garantizar productos sólidos desde el día uno.</p>
+        </div>
+
+        <ol class="process-steps">
+          <li class="step-card">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <h3>Entender</h3>
+              <p>Analizo los objetivos de negocio, las necesidades del usuario y las limitaciones técnicas.</p>
+            </div>
+          </li>
+          <li class="step-card">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <h3>Diseñar</h3>
+              <p>Estructuro wireframes, flujos navegables y sistemas visuales probados antes de escribir código.</p>
+            </div>
+          </li>
+          <li class="step-card">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <h3>Construir</h3>
+              <p>Desarrollo código limpio, semántico, accesible y modular preparado para escalar.</p>
+            </div>
+          </li>
+          <li class="step-card">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <h3>Validar</h3>
+              <p>Mido el rendimiento, evalúo la usabilidad real y ajusto en base a feedback objetivo.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Sección Sobre Mí -->
+    <section class="section container about" id="sobre-mi">
+      <p class="eyebrow">Perfil Profesional</p>
+      <div class="about-grid">
+        <h2>Diseño y código no son etapas aisladas, son la misma conversación.</h2>
+        <div class="about-content">
+          <p>Me especializo en cerrar la brecha entre el diseño visual y la ingeniería frontend. Mi meta es construir productos digitales que no solo se vean impecables, sino que respondan rápido y resuelvan problemas reales.</p>
+
+          <dl class="info-list">
+            <div class="info-item">
+              <dt>Enfoque</dt>
+              <dd>UX/UI · Frontend · Full-stack</dd>
+            </div>
+            <div class="info-item">
+              <dt>Ubicación</dt>
+              <dd>Colombia (Trabajo Remoto Global)</dd>
+            </div>
+            <div class="info-item">
+              <dt>Disponibilidad</dt>
+              <dd>Proyectos Freelance & Contratación Full-Time</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección Contacto -->
+    <section class="contact-section" id="contacto">
+      <div class="container contact-grid">
+        <div class="contact-header">
+          <p class="eyebrow">Contacto Directo</p>
+          <h2>¿Tienes un proyecto o idea en mente?</h2>
+          <p>Estoy disponible para colaborar en productos digitales, consultorías UX o desarrollo de software.</p>
+        </div>
+
+        <div class="contact-card">
+          <p class="contact-subtitle">Elige cómo prefieres escribirme:</p>
+          
+          <div class="contact-buttons">
+            <a class="button button-primary" href="mailto:sfmorenob@gmail.com" target="_blank" rel="noopener">
+              Enviar Email Directo <span aria-hidden="true">✉️</span>
+            </a>
+
+            <a class="button button-outline" href="https://mail.google.com/mail/?view=cm&fs=1&to=sfmorenob@gmail.com" target="_blank" rel="noopener">
+              Abrir en Gmail Web <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+
+          <div class="email-copy-box">
+            <code id="email-text">sfmorenob@gmail.com</code>
+            <button type="button" class="button-copy" id="copy-email-btn" aria-label="Copiar correo electrónico">
+              <span id="copy-text">Copiar</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer container">
+    <div class="footer-content">
+      <a class="brand" href="#inicio" aria-label="Volver al inicio">
+        SM<span class="brand-dot" aria-hidden="true">.</span>
+      </a>
+      <p>Diseñado y desarrollado por <strong>Sebastián Moreno</strong> · <span id="year"></span></p>
+      <a class="back-to-top" href="#inicio">Volver arriba ↑</a>
+    </div>
+  </footer>
+
+  <!-- Diálogo / Modal para Caso de Estudio -->
+  <dialog class="case-dialog" id="ardo-dialog" aria-labelledby="ardo-title">
+    <div class="dialog-content">
+      <button class="dialog-close" type="button" data-dialog-close aria-label="Cerrar modal">&times;</button>
+      <p class="eyebrow">Caso de Estudio en Documentación</p>
+      <h2 id="ardo-title">Auditoría UX — ARDO Marketing</h2>
+      <p>Este caso detalla la reestructuración completa de los embudos de captura, resolución de errores visuales en layouts móviles y la optimización de accesibilidad WCAG AA.</p>
+      <p class="dialog-note"><em>Nota: Se revelarán únicamente métricas y entregables autorizados por la marca.</em></p>
+      <button class="button button-secondary" type="button" data-dialog-close>Entendido</button>
+    </div>
+  </dialog>
+
+  <script src="script.js"></script>
+</body>
+</html>
