@@ -32,6 +32,11 @@
   --naranja: #fc4b08;       /* marca como superficie: texto encima siempre en tinta (5,69:1) */
   --naranja-2: #ff8a3d;
   --error-claro: #b91c1c;
+  --clara-fondo: #ffffff;
+  --clara-texto: #0b0d12;
+  --clara-texto-2: #55596a; /* 7,03:1 sobre blanco */
+  --clara-acento: #c2410c;  /* 5,18:1 sobre blanco */
+  --clara-borde: #64748b;   /* 4,76:1: el límite de los campos es visible (WCAG 1.4.11) */
   --radio: 20px;
   --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
   --sans: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -52,6 +57,14 @@
   color-scheme: dark;
 }
 
+/* Contraste alto sobre la paleta de noche: texto 15,6:1 y acento 8,3:1 */
+:root[data-contraste="alto"],
+:root[data-contraste="alto"][data-tema="dia"] .invertida {
+  --texto-2: #e4e6ee;
+  --acento: #ff8a4c;
+  --borde: rgba(255, 255, 255, 0.4);
+}
+
 /* Paleta de día */
 :root[data-tema="dia"],
 :root:not([data-tema="dia"]) .invertida {
@@ -64,6 +77,14 @@
   --acento-inv: #fc4b08;    /* acento para tarjetas de color invertido (oscuras) */
   --borde: rgba(11, 13, 18, 0.12);
   color-scheme: light;
+}
+
+/* Contraste alto sobre la paleta de día: texto 12,7:1 y acento 6,85:1 */
+:root[data-contraste="alto"][data-tema="dia"],
+:root[data-contraste="alto"]:not([data-tema="dia"]) .invertida {
+  --texto-2: #2b2e38;
+  --acento: #9a3412;
+  --borde: rgba(11, 13, 18, 0.45);
 }
 
 *,
@@ -124,7 +145,7 @@ img {
   color: var(--tinta);
 }
 
-/* La cinta inclinada sobresale del ancho: clip recorta sin crear un contenedor de scroll (position: sticky sigue funcionando) */
+/* Recorta lo que sobresale en horizontal (chips de la diana, parallax) sin crear un contenedor de scroll: position: sticky sigue funcionando */
 main {
   overflow-x: clip;
 }
@@ -173,9 +194,14 @@ main {
 
 /* Aviso de concepto */
 .aviso {
-  background: var(--naranja);
-  color: var(--tinta);
+  background: var(--superficie);
+  border-bottom: 1px solid var(--borde);
+  color: var(--texto-2);
   font-size: 0.85rem;
+}
+
+.aviso strong {
+  color: var(--texto);
 }
 
 .aviso p {
@@ -185,8 +211,8 @@ main {
 }
 
 .aviso a {
-  color: var(--tinta);
-  font-weight: 800;
+  color: var(--acento);
+  font-weight: 700;
 }
 
 /* --------------------------------------------------------------------------
@@ -248,12 +274,12 @@ main {
 }
 
 .boton-oscuro {
-  background: var(--tinta);
-  color: #ffffff;
+  background: var(--clara-texto);
+  color: var(--clara-fondo);
 }
 
 .boton-oscuro:hover {
-  background: #1e212b;
+  background: color-mix(in srgb, var(--clara-texto) 85%, var(--clara-fondo));
 }
 
 .boton-ancho {
@@ -556,45 +582,6 @@ main {
 .chip-3 { bottom: 4%; left: 6%; }
 
 /* --------------------------------------------------------------------------
-   Cinta en movimiento
-   -------------------------------------------------------------------------- */
-.cinta {
-  overflow: hidden;
-  padding-block: 18px;
-  border-block: 1px solid rgba(11, 13, 18, 0.3);
-  background: var(--naranja);
-  color: var(--tinta);
-  rotate: -1.5deg;
-  margin-block: -8px;
-  position: relative;
-  z-index: 2;
-}
-
-.cinta-pista {
-  display: flex;
-  width: max-content;
-}
-
-.cinta-pista span {
-  display: inline-flex;
-  align-items: center;
-  gap: 28px;
-  padding-right: 28px;
-  font-size: clamp(1.1rem, 2vw, 1.5rem);
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  white-space: nowrap;
-}
-
-.cinta-pista span::after {
-  content: "";
-  width: 12px;
-  height: 12px;
-  border: 3px solid var(--tinta);
-  border-radius: 50%;
-}
-
-/* --------------------------------------------------------------------------
    Secciones
    -------------------------------------------------------------------------- */
 .seccion {
@@ -799,9 +786,8 @@ main {
 .testimonio {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 24px;
-  padding: 32px;
+  gap: 22px;
+  padding: 28px;
   border-radius: var(--radio);
   background: var(--texto); /* tarjeta en la paleta contraria a la de su banda */
   color: var(--fondo);
@@ -810,33 +796,76 @@ main {
 }
 
 .testimonio blockquote {
+  position: relative;
   margin: 0;
-  font-size: 1.15rem;
-  font-weight: 600;
-  line-height: 1.5;
+  font-size: 1.05rem;
+  font-weight: 500;
+  line-height: 1.6;
 }
 
 .testimonio blockquote p {
   margin: 0;
 }
 
-.testimonio blockquote p::before {
+/* Comillas grandes y discretas, como marca de agua de la cita */
+.testimonio blockquote::before {
   content: "“";
-  display: block;
-  height: 0.6em;
-  margin-bottom: 12px;
+  position: absolute;
+  top: -0.35em;
+  right: 0;
   color: var(--acento-inv);
-  font-size: 4rem;
+  font-size: 5rem;
+  font-weight: 800;
   line-height: 1;
+  opacity: 0.35;
 }
 
-.testimonio-autor {
+/* Cabecera: logo real del cliente + estrellas + empresa y cargo */
+.testimonio-cabeza {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.testimonio-logo {
+  flex-shrink: 0;
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--fondo) 18%, transparent), 0 12px 24px -12px rgba(0, 0, 0, 0.5);
+  background: var(--clara-fondo);
+}
+
+.estrellas {
+  display: flex;
+  gap: 2px;
+  margin: 0 0 6px;
+}
+
+/* Estrellas: gráfico, no texto. El naranja cumple 3:1 sobre ambos fondos de tarjeta (WCAG 1.4.11) */
+.estrella {
+  fill: var(--naranja);
+}
+
+.estrella.vacia {
+  fill: none;
+  stroke: var(--naranja);
+  stroke-width: 1.6;
+}
+
+.testimonio-empresa {
   margin: 0;
-  font-family: var(--mono);
-  font-size: 0.85rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--acento-inv);
+  font-size: 1.1rem;
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+.testimonio-cargo {
+  margin: 2px 0 0;
+  font-size: 0.9rem;
+  opacity: 0.78;
 }
 
 .testimonio:hover {
@@ -945,7 +974,7 @@ main {
 }
 
 .opcional {
-  color: #55596a;
+  color: var(--clara-texto-2);
   font-size: 0.875rem;
   font-weight: 400;
 }
@@ -965,22 +994,22 @@ main {
 .formulario {
   padding: clamp(24px, 4vw, 40px);
   border-radius: 28px;
-  background: #ffffff;
-  color: var(--tinta); /* tarjeta siempre clara, en cualquier tema y banda */
+  background: var(--clara-fondo);
+  color: var(--clara-texto); /* tarjeta siempre clara, en cualquier tema y banda */
   box-shadow: 0 30px 80px -40px rgba(11, 13, 18, 0.45);
 }
 
 .formulario a {
-  color: #c2410c;
+  color: var(--clara-acento);
 }
 
 .formulario :focus-visible {
-  outline-color: #c2410c;
+  outline-color: var(--clara-acento);
 }
 
 .form-nota {
   margin: 0 0 18px;
-  color: #55596a;
+  color: var(--clara-texto-2);
   font-size: 0.875rem;
 }
 
@@ -999,9 +1028,9 @@ main {
   width: 100%;
   min-height: 50px;
   padding: 12px 16px;
-  border: 1.5px solid #64748b; /* 4,76:1 sobre blanco: el límite del campo es visible (WCAG 1.4.11) */
+  border: 1.5px solid var(--clara-borde);
   border-radius: 12px;
-  background: #ffffff;
+  background: var(--clara-fondo);
   color: var(--tinta);
   font: inherit;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
@@ -1234,8 +1263,8 @@ main {
   translate: 0 -50%;
   border-radius: 50%;
   background:
-    radial-gradient(circle, rgba(255, 176, 102, 0.55) 0%, rgba(255, 138, 61, 0.22) 32%, transparent 62%),
-    repeating-conic-gradient(from 0deg, rgba(252, 75, 8, 0.1) 0deg 6deg, transparent 6deg 18deg);
+    radial-gradient(circle, rgba(255, 176, 102, 0.4) 0%, rgba(255, 138, 61, 0.14) 32%, transparent 62%),
+    repeating-conic-gradient(from 0deg, rgba(252, 75, 8, 0.05) 0deg 6deg, transparent 6deg 18deg);
   mask-image: radial-gradient(circle, #000 30%, transparent 70%);
 }
 
@@ -1336,6 +1365,656 @@ main {
 }
 
 /* --------------------------------------------------------------------------
+   Página del sistema visual (sistema.html)
+   -------------------------------------------------------------------------- */
+.sistema-titulo {
+  max-width: 18ch;
+  margin-bottom: 20px;
+  font-size: clamp(2.4rem, 5.5vw, 4.5rem);
+  font-weight: 800;
+}
+
+.sistema-lede {
+  max-width: 62ch;
+  margin: 0 0 48px;
+  color: var(--texto-2);
+  font-size: 1.15rem;
+}
+
+.principios {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.principios li {
+  padding: 28px;
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  background: var(--superficie);
+}
+
+.principios h2 {
+  margin-bottom: 10px;
+  font-size: 1.4rem;
+}
+
+.principios p {
+  margin: 0;
+  color: var(--texto-2);
+}
+
+.muestras {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 16px;
+  margin: 32px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.muestra {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.muestra-color {
+  height: 96px;
+  margin-bottom: 8px;
+  border: 1px solid var(--borde);
+  border-radius: 14px;
+}
+
+.m-fondo { background: var(--fondo); }
+.m-superficie { background: var(--superficie); }
+.m-texto { background: var(--texto); }
+.m-texto-2 { background: var(--texto-2); }
+.m-acento { background: var(--acento); }
+.m-naranja { background: var(--naranja); }
+
+.muestra-nombre {
+  font-family: var(--mono);
+  font-weight: 500;
+}
+
+.muestra-uso {
+  color: var(--texto-2);
+  font-size: 0.9rem;
+}
+
+.tablas-contraste {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 480px), 1fr));
+  gap: 20px;
+  margin-top: 32px;
+}
+
+.pagina-sistema .table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  background: var(--superficie);
+}
+
+.tabla-sistema {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.tabla-sistema caption {
+  padding: 16px 18px 4px;
+  text-align: left;
+  font-weight: 800;
+}
+
+.tabla-sistema th,
+.tabla-sistema td {
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--borde);
+  text-align: left;
+  vertical-align: top;
+}
+
+.tabla-sistema thead th {
+  color: var(--texto-2);
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.tabla-sistema tbody th {
+  font-weight: 600;
+}
+
+.tabla-sistema code,
+.nota-sistema code {
+  font-family: var(--mono);
+  font-size: 0.85em;
+}
+
+.tabla-sistema .num {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.nota-sistema {
+  max-width: 80ch;
+  margin: 24px 0 0;
+  color: var(--texto-2);
+}
+
+.tipos {
+  display: grid;
+  gap: 6px;
+  margin-top: 32px;
+}
+
+.tipo-muestra {
+  margin: 20px 0 0;
+}
+
+.tipo-display {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.05em;
+}
+
+.tipo-texto {
+  max-width: 50ch;
+  font-size: 1.15rem;
+}
+
+.tipo-mono {
+  font-family: var(--mono);
+  font-size: 2rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--acento);
+}
+
+.tipo-meta {
+  margin: 0;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--borde);
+  color: var(--texto-2);
+  font-family: var(--mono);
+  font-size: 0.85rem;
+}
+
+/* --------------------------------------------------------------------------
+   Navegación: sección actual (demo.js marca aria-current al desplazarse)
+   -------------------------------------------------------------------------- */
+.nav-lista a[aria-current="true"] {
+  color: var(--texto);
+}
+
+.nav-lista a[aria-current="true"]::after {
+  scale: 1 1;
+}
+
+/* --------------------------------------------------------------------------
+   Confían en nosotros
+   -------------------------------------------------------------------------- */
+.marcas {
+  padding-block: 28px;
+  border-block: 1px solid var(--borde);
+  background: var(--superficie);
+}
+
+.marcas-fila {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 40px;
+}
+
+.marcas-titulo {
+  flex-shrink: 0;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--texto-2);
+}
+
+.marcas-lista {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px 32px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Los logos llegan en blanco: de noche se ven tal cual; de día se oscurecen */
+.marcas-lista img {
+  width: auto;
+  height: 30px;
+  opacity: 0.7;
+  transition: opacity 0.25s ease, scale 0.25s var(--ease);
+}
+
+:root[data-tema="dia"] .marcas-lista img {
+  filter: brightness(0);
+  opacity: 0.6;
+}
+
+.marcas-lista li:hover img {
+  opacity: 1;
+  scale: 1.06;
+}
+
+/* --------------------------------------------------------------------------
+   Planes
+   -------------------------------------------------------------------------- */
+.planes-cabeza {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: space-between;
+  gap: 24px;
+  max-width: none;
+}
+
+.planes-cabeza h2 {
+  max-width: 20ch;
+}
+
+/* Selector mensual/anual: dos botones con aria-pressed */
+.periodo {
+  display: inline-flex;
+  padding: 5px;
+  border: 1px solid var(--borde);
+  border-radius: 999px;
+  background: var(--superficie);
+}
+
+.periodo-opcion {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--texto-2);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.periodo-opcion[aria-pressed="true"] {
+  background: var(--texto);
+  color: var(--fondo);
+}
+
+.periodo-ahorro {
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--acento) 55%, transparent);
+  background: color-mix(in srgb, var(--acento) 14%, transparent);
+  color: var(--texto); /* texto normal sobre el tinte: el naranja sobre naranja no alcanzaba 4,5:1 */
+  font-size: 0.75rem;
+}
+
+.periodo-opcion[aria-pressed="true"] .periodo-ahorro {
+  background: var(--naranja);
+  color: var(--tinta);
+}
+
+.planes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.plan {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 32px 28px;
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  background: var(--superficie);
+  transition: translate 0.35s var(--ease), border-color 0.3s ease;
+}
+
+.plan:hover {
+  translate: 0 -6px;
+  border-color: color-mix(in srgb, var(--acento) 50%, transparent);
+}
+
+.plan-destacado {
+  border-color: var(--acento);
+  box-shadow: 0 30px 60px -40px rgba(252, 75, 8, 0.7);
+}
+
+.plan h3 {
+  min-height: 2.2em;
+  font-size: 1.3rem;
+}
+
+.plan-precio {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 8px;
+  margin: 0;
+}
+
+.plan-desde,
+.plan-periodo {
+  color: var(--texto-2);
+  font-size: 0.9rem;
+}
+
+/* "Desde" como etiqueta sobre el precio; el precio y su periodo, en la misma línea */
+.plan-desde {
+  flex-basis: 100%;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.plan-valor {
+  font-size: clamp(1.6rem, 2.6vw, 2.1rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.plan-items {
+  display: grid;
+  gap: 10px;
+  margin: 0 0 auto;
+  padding: 18px 0 0;
+  border-top: 1px solid var(--borde);
+  list-style: none;
+}
+
+.plan-items li {
+  position: relative;
+  padding-left: 28px;
+  color: var(--texto-2);
+}
+
+/* Marca de verificación dibujada con bordes (sin imágenes ni iconos de fuente) */
+.plan-items li::before {
+  content: "";
+  position: absolute;
+  top: 0.35em;
+  left: 2px;
+  width: 6px;
+  height: 11px;
+  border: solid var(--acento);
+  border-width: 0 2.5px 2.5px 0;
+  rotate: 45deg;
+}
+
+.planes-nota {
+  margin: 20px 0 0;
+  color: var(--texto-2);
+  font-size: 0.9rem;
+}
+
+/* Campo select del formulario, con la misma estética que los demás */
+.campo select {
+  width: 100%;
+  min-height: 50px;
+  padding: 12px 16px;
+  border: 1.5px solid var(--clara-borde);
+  border-radius: 12px;
+  background: var(--clara-fondo);
+  color: var(--clara-texto);
+  font: inherit;
+}
+
+.campo select:focus-visible {
+  border-color: var(--clara-texto);
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(252, 75, 8, 0.35);
+}
+
+/* Aviso breve cuando "Cotizar este plan" rellena el formulario */
+.campo-resaltado select {
+  border-color: var(--clara-acento);
+  box-shadow: 0 0 0 4px rgba(252, 75, 8, 0.25);
+}
+
+/* --------------------------------------------------------------------------
+   Ajustes de lectura (popover nativo)
+   -------------------------------------------------------------------------- */
+.boton-ajustes {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--borde);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--texto);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.boton-ajustes:hover {
+  background: color-mix(in srgb, var(--texto) 8%, transparent);
+}
+
+.ajustes {
+  inset: 88px 20px auto auto;
+  width: min(340px, calc(100vw - 40px));
+  margin: 0;
+  padding: 22px;
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  background: var(--superficie);
+  color: var(--texto);
+  box-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.55);
+}
+
+.ajustes::backdrop {
+  background: rgba(11, 13, 18, 0.25);
+}
+
+.ajustes-cabeza {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.ajustes-cabeza h2 {
+  font-size: 1.15rem;
+}
+
+.ajustes-cerrar {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--texto);
+  cursor: pointer;
+}
+
+.ajustes-cerrar:hover {
+  background: color-mix(in srgb, var(--texto) 8%, transparent);
+}
+
+.ajuste {
+  margin: 0 0 14px;
+  padding: 0;
+  border: 0;
+}
+
+.ajuste legend {
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+.segmentado {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+.segmentado label {
+  position: relative;
+}
+
+.segmentado input {
+  position: absolute;
+  opacity: 0;
+}
+
+.segmentado label > span:not(.visually-hidden) {
+  display: grid;
+  place-items: center;
+  min-height: 44px;
+  border: 1.5px solid var(--borde);
+  border-radius: 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.segmentado .a-grande { font-size: 1.2rem; }
+.segmentado .a-muy-grande { font-size: 1.45rem; }
+
+.segmentado input:checked + span {
+  border-color: var(--acento);
+  background: color-mix(in srgb, var(--acento) 14%, transparent);
+}
+
+.segmentado input:focus-visible + span {
+  outline: 3px solid var(--acento);
+  outline-offset: 2px;
+}
+
+/* Interruptores: checkbox nativo con apariencia de switch */
+.interruptor {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 48px;
+  border-top: 1px solid var(--borde);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.interruptor span {
+  order: -1;
+}
+
+.interruptor input {
+  appearance: none;
+  position: relative;
+  flex-shrink: 0;
+  width: 46px;
+  height: 26px;
+  margin: 0;
+  border: 1.5px solid color-mix(in srgb, var(--texto) 45%, transparent);
+  border-radius: 999px;
+  background: transparent;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.interruptor input::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  background: var(--texto);
+  transition: translate 0.2s var(--ease);
+}
+
+.interruptor input:checked {
+  border-color: var(--naranja);
+  background: var(--naranja);
+}
+
+.interruptor input:checked::after {
+  background: var(--tinta);
+  translate: 20px 0;
+}
+
+.ajustes-restablecer {
+  width: 100%;
+  min-height: 44px;
+  margin-top: 8px;
+  border: 1.5px solid var(--borde);
+  border-radius: 12px;
+  background: transparent;
+  color: var(--texto);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.ajustes-nota {
+  min-height: 1.4em;
+  margin: 8px 0 0;
+  color: var(--texto-2);
+  font-size: 0.85rem;
+}
+
+/* --- Efecto de cada ajuste ---------------------------------------------------- */
+:root[data-texto="grande"] { font-size: 112.5%; }
+:root[data-texto="muy-grande"] { font-size: 128%; }
+
+/* Contraste alto: enlaces siempre subrayados y bordes visibles */
+:root[data-contraste="alto"] a {
+  text-decoration: underline;
+}
+
+/* Espaciado de lectura: los valores de WCAG 1.4.12 */
+:root[data-espaciado="amplio"] body {
+  line-height: 1.9;
+  letter-spacing: 0.04em;
+  word-spacing: 0.16em;
+}
+
+:root[data-espaciado="amplio"] main p {
+  margin-bottom: 2em;
+}
+
+/* Pausar animaciones: anula todo el movimiento, aunque el sistema no lo pida */
+:root[data-movimiento="reducido"] {
+  scroll-behavior: auto;
+}
+
+:root[data-movimiento="reducido"] *,
+:root[data-movimiento="reducido"] *::before,
+:root[data-movimiento="reducido"] *::after {
+  animation: none !important;
+  transition-duration: 0.01ms !important;
+}
+
+/* --------------------------------------------------------------------------
    Responsive
    -------------------------------------------------------------------------- */
 @media (max-width: 960px) {
@@ -1415,6 +2094,19 @@ main {
   .cifras {
     grid-template-columns: 1fr;
   }
+
+  .planes {
+    grid-template-columns: 1fr;
+    max-width: 560px;
+  }
+
+  .plan h3 {
+    min-height: 0;
+  }
+
+  .marcas-lista {
+    justify-content: flex-start;
+  }
 }
 
 @media (max-width: 640px) {
@@ -1461,6 +2153,11 @@ main {
   .pie {
     padding-bottom: 104px;
   }
+
+  /* La barra fija no debe tapar el elemento enfocado ni el destino de un ancla (WCAG 2.4.11) */
+  html {
+    scroll-padding-bottom: 96px;
+  }
 }
 
 /* --------------------------------------------------------------------------
@@ -1504,7 +2201,7 @@ main {
   }
 
   .punto {
-    animation: latido 2s ease-out infinite;
+    animation: latido 2s ease-out 3;
   }
 
   @keyframes latido {
@@ -1552,41 +2249,24 @@ main {
   }
 
   .chip {
-    animation: chip-entra 0.7s var(--ease) both, flotar 6s ease-in-out 1.6s infinite alternate;
+    animation: chip-entra 0.7s var(--ease) both;
   }
 
-  .chip-1 { animation-delay: 1.3s, 1.9s; }
-  .chip-2 { animation-delay: 1.45s, 2.1s; }
-  .chip-3 { animation-delay: 1.6s, 2.3s; }
+  .chip-1 { animation-delay: 1.3s; }
+  .chip-2 { animation-delay: 1.45s; }
+  .chip-3 { animation-delay: 1.6s; }
 
   @keyframes chip-entra {
     from { opacity: 0; transform: translateY(14px) scale(0.92); }
   }
 
-  @keyframes flotar {
-    to { translate: 0 -10px; }
+  /* Solo se anima el cielo visible: de día las estrellas no gastan CPU, ni el sol de noche */
+  :root:not([data-tema="dia"]) .hero-cielo::before {
+    animation: titilar 6s ease-in-out infinite alternate;
   }
 
-  /* Cinta infinita: el contenido está duplicado, así que desplazar el 50 % cierra el bucle */
-  .cinta-pista {
-    animation: cinta 28s linear infinite;
-  }
-
-  .cinta:hover .cinta-pista {
-    animation-play-state: paused;
-  }
-
-  @keyframes cinta {
-    to { transform: translateX(-50%); }
-  }
-
-  /* Noche: dos capas de estrellas que titilan desfasadas */
-  .hero-cielo::before {
-    animation: titilar 4s ease-in-out infinite alternate;
-  }
-
-  .hero-cielo::after {
-    animation: titilar 5.5s ease-in-out 1.2s infinite alternate-reverse;
+  :root:not([data-tema="dia"]) .hero-cielo::after {
+    animation: titilar 8s ease-in-out 1.2s infinite alternate-reverse;
   }
 
   @keyframes titilar {
@@ -1595,21 +2275,21 @@ main {
   }
 
   /* Día: los rayos del sol giran lentamente */
-  .hero-sol::before {
-    animation: girar-sol 60s linear infinite;
+  :root[data-tema="dia"] .hero-sol::before {
+    animation: girar-sol 90s linear infinite;
   }
 
   @keyframes girar-sol {
     to { rotate: 360deg; }
   }
 
-  /* Ondas de sonar periódicas desde el centro de la diana */
+  /* Dos ondas de sonar tras el impacto de la flecha, y se detienen */
   .sonar {
-    animation: sonar 4.5s ease-out 2.2s infinite;
+    animation: sonar 2.4s ease-out 1.4s both;
   }
 
   .sonar.s2 {
-    animation-delay: 4.45s;
+    animation-delay: 2.1s;
   }
 
   @keyframes sonar {

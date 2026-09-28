@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-ySvX5QVszY5x5c5Njv8/jlCLTr0jXDh+NdLRc11g/yA='; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'none'; object-src 'none'; base-uri 'self'; upgrade-insecure-requests">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Concepto de portafolio: no debe aparecer en buscadores como si fuera el sitio de la agencia -->
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="Sistema visual del concepto de rediseño de ARDO Marketing: paleta, contrastes WCAG, tipografía y principios de movimiento.">
+  <meta name="theme-color" content="#0b0d12">
+  <meta name="color-scheme" content="dark light">
+  <!-- Tema y ajustes de lectura antes del primer pintado. Si se cambia este script, hay que recalcular su hash en la CSP (validar.js lo comprueba) -->
+  <script>
+    (function () {
+      var raiz = document.documentElement;
+      var tema;
+      var ajustes = {};
+      try {
+        tema = localStorage.getItem('ardo-tema');
+        ajustes = JSON.parse(localStorage.getItem('ardo-ajustes') || '{}') || {};
+      } catch (e) { tema = null; }
+      if (tema !== 'dia' && tema !== 'noche') {
+        tema = window.matchMedia('(prefers-color-scheme: light)').matches ? 'dia' : 'noche';
+      }
+      if (tema === 'dia') raiz.setAttribute('data-tema', 'dia');
+      ['texto', 'contraste', 'movimiento', 'espaciado'].forEach(function (k) {
+        if (typeof ajustes[k] === 'string' && /^[a-z-]{1,20}$/.test(ajustes[k])) raiz.setAttribute('data-' + k, ajustes[k]);
+      });
+    })();
+  </script>
+  <title>Sistema visual · Concepto ARDO Marketing</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23fc4b08'/%3E%3Ccircle cx='16' cy='16' r='9' fill='none' stroke='%230b0d12' stroke-width='3'/%3E%3Ccircle cx='16' cy='16' r='3' fill='%230b0d12'/%3E%3C/svg%3E">
+  <link rel="preload" href="../fonts/plus-jakarta-sans-latin-var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="estilos.min.css">
+</head>
+<body class="pagina-sistema">
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+  <aside class="aviso" aria-label="Aviso sobre esta página">
+    <p><strong>Concepto de rediseño independiente</strong> por Sebastián Moreno. No es el sitio oficial de ARDO Marketing. <a href="./">Volver al concepto</a></p>
+  </aside>
+
+  <header class="cabecera">
+    <div class="contenedor cabecera-fila">
+      <a class="marca" href="./" aria-label="ARDO Marketing, volver al concepto">
+        <img class="logo-noche" src="img/logo-blanco.webp" width="120" height="44" alt="">
+        <img class="logo-dia" src="img/logo-naranja.webp" width="120" height="44" alt="" loading="lazy">
+      </a>
+      <div class="cabecera-controles">
+        <button class="boton-tema" id="boton-tema" type="button" aria-label="Activar modo día">
+          <svg class="tema-icono" aria-hidden="true" width="22" height="22" viewBox="0 0 24 24">
+            <mask id="tema-mascara"><rect width="24" height="24" fill="#fff"/><circle class="tema-mascara" cx="17" cy="7" r="6" fill="#000"/></mask>
+            <circle class="tema-nucleo" cx="12" cy="12" r="7" fill="currentColor" mask="url(#tema-mascara)"/>
+            <g class="tema-rayos" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 1.5v2.2M12 20.3v2.2M1.5 12h2.2M20.3 12h2.2M4.6 4.6l1.5 1.5M17.9 17.9l1.5 1.5M4.6 19.4l1.5-1.5M17.9 6.1l1.5-1.5"/></g>
+          </svg>
+        </button>
+        <a class="boton boton-marca boton-sm" href="./#contacto">Trabajemos juntos</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="contenido">
+    <section class="seccion">
+      <div class="contenedor">
+        <p class="etiqueta">Sistema visual</p>
+        <h1 class="sistema-titulo">Una paleta pensada para quien lee, no para decorar.</h1>
+        <p class="sistema-lede">
+          Cada color tiene un trabajo. El fondo y las superficies dan calma; el texto se lee sin esfuerzo en los dos temas;
+          el naranja de la marca se reserva para lo que queremos que la persona haga: contactar.
+        </p>
+
+        <ol class="principios">
+          <li><h2>60 · 30 · 10</h2><p>60 % fondo neutro, 30 % superficies y texto, 10 % naranja solo en acciones y datos clave. Medido: el naranja saturado ocupa menos del 1 % de la página, concentrado en los botones.</p></li>
+          <li><h2>Contraste verificado</h2><p>Todo el texto cumple WCAG 2.2 AA (4,5 : 1) en modo día y noche. axe-core: 0 violaciones a 390 y 320 px en ambos temas.</p></li>
+          <li><h2>Movimiento con propósito</h2><p>Lo que se anima guía la lectura y ocurre una vez. En bucle solo quedan 3–4 efectos lentos, y nada se mueve si el sistema pide reducir el movimiento.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="seccion invertida" aria-labelledby="paleta-titulo">
+      <div class="contenedor">
+        <h2 id="paleta-titulo">La paleta cambia con el tema; el método no</h2>
+        <p class="seccion-intro">Esta banda muestra la paleta contraria a la del tema activo. Pulsa el botón sol/luna para comparar.</p>
+        <ul class="muestras">
+          <li class="muestra"><span class="muestra-color m-fondo" aria-hidden="true"></span><span class="muestra-nombre">--fondo</span><span class="muestra-uso">60 % · fondo de página</span></li>
+          <li class="muestra"><span class="muestra-color m-superficie" aria-hidden="true"></span><span class="muestra-nombre">--superficie</span><span class="muestra-uso">30 % · tarjetas y bandas</span></li>
+          <li class="muestra"><span class="muestra-color m-texto" aria-hidden="true"></span><span class="muestra-nombre">--texto</span><span class="muestra-uso">titulares y texto</span></li>
+          <li class="muestra"><span class="muestra-color m-texto-2" aria-hidden="true"></span><span class="muestra-nombre">--texto-2</span><span class="muestra-uso">texto de apoyo</span></li>
+          <li class="muestra"><span class="muestra-color m-acento" aria-hidden="true"></span><span class="muestra-nombre">--acento</span><span class="muestra-uso">enlaces y etiquetas</span></li>
+          <li class="muestra"><span class="muestra-color m-naranja" aria-hidden="true"></span><span class="muestra-nombre">--naranja</span><span class="muestra-uso">10 % · acciones (CTA)</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="seccion" aria-labelledby="contraste-titulo">
+      <div class="contenedor">
+        <h2 id="contraste-titulo">Contrastes calculados</h2>
+        <p class="seccion-intro">Calculados con la fórmula de luminancia relativa de WCAG a partir de los tokens del código. El mínimo para texto es 4,5 : 1.</p>
+        <div class="tablas-contraste">
+          <div class="table-wrap" tabindex="0" role="region" aria-label="Contrastes en modo noche">
+            <table class="tabla-sistema">
+              <caption>Modo noche</caption>
+              <thead><tr><th scope="col">Uso</th><th scope="col">Colores</th><th scope="col">Contraste</th><th scope="col">Nivel</th></tr></thead>
+              <tbody>
+              <tr><th scope="row">Texto principal</th><td><code>#ffffff</code> sobre <code>#0b0d12</code></td><td class="num">19,43 : 1</td><td>AAA</td></tr>
+              <tr><th scope="row">Texto secundario</th><td><code>#b4b8c5</code> sobre <code>#0b0d12</code></td><td class="num">9,81 : 1</td><td>AAA</td></tr>
+              <tr><th scope="row">Acento (enlaces, etiquetas)</th><td><code>#fc4b08</code> sobre <code>#0b0d12</code></td><td class="num">5,69 : 1</td><td>AA</td></tr>
+              <tr><th scope="row">Texto sobre superficie</th><td><code>#ffffff</code> sobre <code>#16181f</code></td><td class="num">17,73 : 1</td><td>AAA</td></tr>
+              <tr><th scope="row">Acento sobre superficie</th><td><code>#fc4b08</code> sobre <code>#16181f</code></td><td class="num">5,19 : 1</td><td>AA</td></tr>
+              <tr><th scope="row">Botón: tinta sobre naranja de marca</th><td><code>#0b0d12</code> sobre <code>#fc4b08</code></td><td class="num">5,69 : 1</td><td>AA</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="table-wrap" tabindex="0" role="region" aria-label="Contrastes en modo día">
+            <table class="tabla-sistema">
+              <caption>Modo día</caption>
+              <thead><tr><th scope="col">Uso</th><th scope="col">Colores</th><th scope="col">Contraste</th><th scope="col">Nivel</th></tr></thead>
+              <tbody>
+              <tr><th scope="row">Texto principal</th><td><code>#0b0d12</code> sobre <code>#fff6ef</code></td><td class="num">18,21 : 1</td><td>AAA</td></tr>
+              <tr><th scope="row">Texto secundario</th><td><code>#55596a</code> sobre <code>#fff6ef</code></td><td class="num">6,51 : 1</td><td>AA</td></tr>
+              <tr><th scope="row">Acento (enlaces, etiquetas)</th><td><code>#c2410c</code> sobre <code>#fff6ef</code></td><td class="num">4,85 : 1</td><td>AA</td></tr>
+              <tr><th scope="row">Texto sobre superficie</th><td><code>#0b0d12</code> sobre <code>#ffffff</code></td><td class="num">19,43 : 1</td><td>AAA</td></tr>
+              <tr><th scope="row">Acento sobre superficie</th><td><code>#c2410c</code> sobre <code>#ffffff</code></td><td class="num">5,18 : 1</td><td>AA</td></tr>
+              <tr><th scope="row">Botón: tinta sobre naranja de marca</th><td><code>#0b0d12</code> sobre <code>#fc4b08</code></td><td class="num">5,69 : 1</td><td>AA</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <p class="nota-sistema">El naranja vivo de la marca (<code>#fc4b08</code>) da 3,42 : 1 con texto blanco y no cumple. Por eso los botones llevan texto en tinta (5,69 : 1) y, sobre fondos claros, el acento se oscurece a <code>#c2410c</code>.</p>
+      </div>
+    </section>
+
+    <section class="seccion invertida" aria-labelledby="tipo-titulo">
+      <div class="contenedor">
+        <h2 id="tipo-titulo">Tipografía</h2>
+        <div class="tipos">
+          <p class="tipo-muestra tipo-display">Crecer es mejor</p>
+          <p class="tipo-meta">Plus Jakarta Sans 800 · titulares · escala fluida con clamp()</p>
+          <p class="tipo-muestra tipo-texto">Conectamos tu propósito con la audiencia correcta y lo medimos cada mes.</p>
+          <p class="tipo-meta">Plus Jakarta Sans 400–600 · texto · 16–19 px, interlineado 1,6</p>
+          <p class="tipo-muestra tipo-mono">80% · 70% · +100</p>
+          <p class="tipo-meta">DM Mono 500 · cifras y etiquetas · números tabulares</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="pie">
+    <div class="contenedor pie-rejilla">
+      <img src="img/logo-naranja.webp" width="140" height="51" alt="ARDO Marketing" loading="lazy">
+      <p>Concepto de rediseño independiente por <a href="../">Sebastián Moreno</a>. No es el sitio oficial de ARDO Marketing. <a href="../#caso-ardo">Volver al caso de estudio</a></p>
+    </div>
+  </footer>
+
+  <script src="demo.js" defer></script>
+</body>
+</html>

@@ -20,7 +20,7 @@ Auditoría del sitio en producción de una agencia de marketing: **embudo de con
 | Lighthouse Performance móvil / LCP | **57** / **11,5 s** (mediana de 3 corridas) |
 | Fallos WCAG críticos o serios (axe-core) | **39** |
 
-🎯 **[Ver el concepto rediseñado →](https://nick-fm1.github.io/ardo-rediseno/)**: prototipo independiente medido con las mismas herramientas (Lighthouse móvil 57 → 97, LCP 11,5 → 1,8 s, fallos WCAG serios 39 → 0 en modo día y noche), con tipografía cinética, modo día/noche, animaciones ligadas al scroll e interacciones de puntero que respetan el movimiento reducido.
+🎯 **[Ver el concepto rediseñado →](https://nick-fm1.github.io/ardo-rediseno/)**: prototipo independiente medido con las mismas herramientas (Lighthouse móvil 57 → 95, LCP 11,5 → 2,0 s, fallos WCAG serios 39 → 0 en modo día y noche). Incluye planes con precios y selector mensual/anual, logos reales de clientes, testimonios con calificación, un panel de ajustes de lectura (tamaño de texto, contraste alto, pausar animaciones y espaciado de WCAG 1.4.12) y una [página de sistema visual](https://nick-fm1.github.io/ardo-rediseno/sistema.html) con los contrastes calculados.
 
 📄 **[Leer la auditoría técnica completa →](guia-ardo-marketing.md)** (formato STAR, metodología, hallazgos por criterio WCAG, código antes/después y plan P0–P2).
 

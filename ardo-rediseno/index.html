@@ -2,22 +2,30 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-ofYRs+lhoPY6+/gxa3og5UN9K8P+MhVLA2vUZOm6WMU='; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'none'; object-src 'none'; base-uri 'self'; upgrade-insecure-requests">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-ySvX5QVszY5x5c5Njv8/jlCLTr0jXDh+NdLRc11g/yA='; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'none'; object-src 'none'; base-uri 'self'; upgrade-insecure-requests">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Concepto de portafolio: no debe aparecer en buscadores como si fuera el sitio de la agencia -->
   <meta name="robots" content="noindex, nofollow">
   <meta name="description" content="Concepto de rediseño independiente de la home de ARDO Marketing, creado por Sebastián Moreno como caso de estudio de conversión, móvil y accesibilidad. No es el sitio oficial.">
   <meta name="theme-color" content="#0b0d12">
   <meta name="color-scheme" content="dark light">
-  <!-- Tema antes del primer pintado. Si se cambia este script, hay que recalcular su hash en la CSP (validar.js lo comprueba) -->
+  <!-- Tema y ajustes de lectura antes del primer pintado. Si se cambia este script, hay que recalcular su hash en la CSP (validar.js lo comprueba) -->
   <script>
     (function () {
+      var raiz = document.documentElement;
       var tema;
-      try { tema = localStorage.getItem('ardo-tema'); } catch (e) { tema = null; }
+      var ajustes = {};
+      try {
+        tema = localStorage.getItem('ardo-tema');
+        ajustes = JSON.parse(localStorage.getItem('ardo-ajustes') || '{}') || {};
+      } catch (e) { tema = null; }
       if (tema !== 'dia' && tema !== 'noche') {
         tema = window.matchMedia('(prefers-color-scheme: light)').matches ? 'dia' : 'noche';
       }
-      if (tema === 'dia') document.documentElement.setAttribute('data-tema', 'dia');
+      if (tema === 'dia') raiz.setAttribute('data-tema', 'dia');
+      ['texto', 'contraste', 'movimiento', 'espaciado'].forEach(function (k) {
+        if (typeof ajustes[k] === 'string' && /^[a-z-]{1,20}$/.test(ajustes[k])) raiz.setAttribute('data-' + k, ajustes[k]);
+      });
     })();
   </script>
   <title>Concepto de rediseño · ARDO Marketing — caso de estudio</title>
@@ -45,13 +53,17 @@
       </a>
       <nav id="menu-principal" aria-label="Principal">
         <ul class="nav-lista">
+          <li><a href="#inicio" aria-current="true">Inicio</a></li>
           <li><a href="#servicios">Servicios</a></li>
+          <li><a href="#planes">Planes</a></li>
           <li><a href="#resultados">Resultados</a></li>
-          <li><a href="#proceso">Cómo trabajamos</a></li>
           <li><a href="#contacto">Contacto</a></li>
         </ul>
       </nav>
       <div class="cabecera-controles">
+        <button class="boton-ajustes" id="boton-ajustes" type="button" popovertarget="ajustes" aria-label="Ajustes de lectura">
+          <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="4.5" r="2"/><path d="M5 8.5l7 1.5 7-1.5M12 10v5M9 21l3-6 3 6"/></svg>
+        </button>
         <button class="boton-tema" id="boton-tema" type="button" aria-label="Activar modo día">
           <svg class="tema-icono" aria-hidden="true" width="22" height="22" viewBox="0 0 24 24">
             <mask id="tema-mascara">
@@ -71,6 +83,29 @@
       </div>
     </div>
   </header>
+
+  <!-- Ajustes de lectura: cada persona adapta la página a lo que necesita; se recuerda entre visitas -->
+  <div class="ajustes" id="ajustes" popover aria-labelledby="ajustes-titulo">
+    <div class="ajustes-cabeza">
+      <h2 id="ajustes-titulo">Ajustes de lectura</h2>
+      <button class="ajustes-cerrar" type="button" popovertarget="ajustes" popovertargetaction="hide" aria-label="Cerrar ajustes">
+        <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <fieldset class="ajuste">
+      <legend>Tamaño del texto</legend>
+      <div class="segmentado">
+        <label><input type="radio" name="texto" value="normal" checked> <span>A</span><span class="visually-hidden"> normal</span></label>
+        <label><input type="radio" name="texto" value="grande"> <span class="a-grande">A</span><span class="visually-hidden"> grande</span></label>
+        <label><input type="radio" name="texto" value="muy-grande"> <span class="a-muy-grande">A</span><span class="visually-hidden"> muy grande</span></label>
+      </div>
+    </fieldset>
+    <label class="interruptor"><input type="checkbox" name="contraste" value="alto"> <span>Contraste alto</span></label>
+    <label class="interruptor"><input type="checkbox" name="movimiento" value="reducido"> <span>Pausar animaciones</span></label>
+    <label class="interruptor"><input type="checkbox" name="espaciado" value="amplio"> <span>Espaciado de lectura</span></label>
+    <button class="ajustes-restablecer" type="button" id="ajustes-restablecer">Restablecer</button>
+    <p class="ajustes-nota" id="ajustes-estado" role="status" aria-live="polite"></p>
+  </div>
 
   <main id="contenido">
     <!-- HERO: HTML real (antes: slider de escritorio escalado con un CTA de 65 × 11 px) -->
@@ -122,13 +157,20 @@
       </div>
     </section>
 
-    <!-- Cinta en movimiento: el contenido real está en la lista de servicios; esta cinta es decorativa -->
-    <div class="cinta" aria-hidden="true">
-      <div class="cinta-pista">
-        <span>Investigación de mercados</span><span>Redes sociales</span><span>Google Ads</span><span>Meta Ads</span><span>WhatsApp Business</span><span>Posicionamiento de marca</span>
-        <span>Investigación de mercados</span><span>Redes sociales</span><span>Google Ads</span><span>Meta Ads</span><span>WhatsApp Business</span><span>Posicionamiento de marca</span>
+    <!-- CONFÍAN EN NOSOTROS: prueba social real, justo después de la promesa del hero -->
+    <section class="marcas" aria-labelledby="marcas-titulo">
+      <div class="contenedor marcas-fila">
+        <h2 id="marcas-titulo" class="marcas-titulo">Confían en nosotros</h2>
+        <ul class="marcas-lista">
+          <li><img src="img/marcas/densalud.webp" width="125" height="30" alt="Densalud" loading="lazy" decoding="async"></li>
+          <li><img src="img/marcas/kalmo.webp" width="125" height="30" alt="Kalmo" loading="lazy" decoding="async"></li>
+          <li><img src="img/marcas/leefante.webp" width="125" height="30" alt="Leefante" loading="lazy" decoding="async"></li>
+          <li><img src="img/marcas/pactor.webp" width="125" height="30" alt="Phaktor" loading="lazy" decoding="async"></li>
+          <li><img src="img/marcas/progreser.webp" width="125" height="30" alt="ProgreSER" loading="lazy" decoding="async"></li>
+          <li><img src="img/marcas/rollindoor.webp" width="125" height="30" alt="Rolling Door Colombia" loading="lazy" decoding="async"></li>
+        </ul>
       </div>
-    </div>
+    </section>
 
     <!-- SERVICIOS: bento con foco que sigue al cursor -->
     <section class="seccion" id="servicios" aria-labelledby="servicios-titulo">
@@ -208,24 +250,100 @@
         </div>
         <ul class="testimonios" id="testimonios" tabindex="0" aria-labelledby="testimonios-titulo">
           <li class="testimonio">
+            <div class="testimonio-cabeza">
+              <img class="testimonio-logo" src="img/clientes/clinimedical.webp" width="96" height="96" alt="" loading="lazy" decoding="async">
+              <div>
+                <p class="estrellas" role="img" aria-label="Calificación: 5 de 5"><svg class="estrella" viewBox="0 0 24 24" width="18" height="18"><path d="M12 2.8l2.8 5.7 6.3.9-4.5 4.4 1.1 6.3L12 17.1l-5.7 3 1.1-6.3L2.9 9.4l6.3-.9z"/></svg><svg class="estrella" viewBox="0 0 24 24" width="18" height="18"><path d="M12 2.8l2.8 5.7 6.3.9-4.5 4.4 1.1 6.3L12 17.1l-5.7 3 1.1-6.3L2.9 9.4l6.3-.9z"/></svg><svg class="estrella" viewBox="0 0 24 24" width="18" height="18"><path d="M12 2.8l2.8 5.7 6.3.9-4.5 4.4 1.1 6.3L12 17.1l-5.7 3 1.1-6.3L2.9 9.4l6.3-.9z"/></svg><svg class="estrella" viewBox="0 0 24 24" width="18" height="18"><path d="M12 2.8l2.8 5.7 6.3.9-4.5 4.4 1.1 6.3L12 17.1l-5.7 3 1.1-6.3L2.9 9.4l6.3-.9z"/></svg><svg class="estrella" viewBox="0 0 24 24" width="18" height="18"><path d="M12 2.8l2.8 5.7 6.3.9-4.5 4.4 1.1 6.3L12 17.1l-5.7 3 1.1-6.3L2.9 9.4l6.3-.9z"/></svg></p>
+                <p class="testimonio-empresa">Clinimedical Group</p>
+                <p class="testimonio-cargo">Gerente General</p>
+              </div>
+            </div>
             <blockquote>
               <p>Ha sido un gran acierto trabajar con Ardo Marketing: nuestra marca ha recibido un excelente impulso desde que iniciamos nuestra estrategia digital.</p>
             </blockquote>
-            <p class="testimonio-autor">Clinimedical Group</p>
           </li>
           <li class="testimonio">
+            <div class="testimonio-cabeza">
+              <img class="testimonio-logo" src="img/clientes/kalmo.webp" width="96" height="96" alt="" loading="lazy" decoding="async">
+              <div>
+                <p class="estrellas" role="img" aria-label="Calificación: 5 de 5"><svg class="estrella" viewBox="0 0 24 24" width="18" height="18"><path d="M12 2.8l2.8 5.7 6.3.9-4.5 4.4 1.1 6.3L12 17.1l-5.7 3 1.1-6.3L2.9 9.4l6.3-.9z"/></svg><svg class="estrella" viewBox="0 0 24 24" width="18" height="18"><path d="M12 2.8l2.8 5.7 6.3.9-4.5 4.4 1.1 6.3L12 17.1l-5.7 3 1.1-6.3L2.9 9.4l6.3-.9z"/></svg><svg class="estrella" viewBox="0 0 24 24" width="18" height="18"><path d="M12 2.8l2.8 5.7 6.3.9-4.5 4.4 1.1 6.3L12 17.1l-5.7 3 1.1-6.3L2.9 9.4l6.3-.9z"/></svg><svg class="estrella" viewBox="0 0 24 24" width="18" height="18"><path d="M12 2.8l2.8 5.7 6.3.9-4.5 4.4 1.1 6.3L12 17.1l-5.7 3 1.1-6.3L2.9 9.4l6.3-.9z"/></svg><svg class="estrella" viewBox="0 0 24 24" width="18" height="18"><path d="M12 2.8l2.8 5.7 6.3.9-4.5 4.4 1.1 6.3L12 17.1l-5.7 3 1.1-6.3L2.9 9.4l6.3-.9z"/></svg></p>
+                <p class="testimonio-empresa">Kalmo</p>
+                <p class="testimonio-cargo">Gerente</p>
+              </div>
+            </div>
             <blockquote>
               <p>Estamos muy satisfechos con el trabajo de Ardo Marketing. Sentimos que nuestras ventas se han impulsado gracias a la estrategia de comunicación digital.</p>
             </blockquote>
-            <p class="testimonio-autor">Kalmo</p>
           </li>
           <li class="testimonio">
+            <div class="testimonio-cabeza">
+              <img class="testimonio-logo" src="img/clientes/boreas.webp" width="96" height="96" alt="" loading="lazy" decoding="async">
+              <div>
+                <p class="estrellas" role="img" aria-label="Calificación: 4 de 5"><svg class="estrella" viewBox="0 0 24 24" width="18" height="18"><path d="M12 2.8l2.8 5.7 6.3.9-4.5 4.4 1.1 6.3L12 17.1l-5.7 3 1.1-6.3L2.9 9.4l6.3-.9z"/></svg><svg class="estrella" viewBox="0 0 24 24" width="18" height="18"><path d="M12 2.8l2.8 5.7 6.3.9-4.5 4.4 1.1 6.3L12 17.1l-5.7 3 1.1-6.3L2.9 9.4l6.3-.9z"/></svg><svg class="estrella" viewBox="0 0 24 24" width="18" height="18"><path d="M12 2.8l2.8 5.7 6.3.9-4.5 4.4 1.1 6.3L12 17.1l-5.7 3 1.1-6.3L2.9 9.4l6.3-.9z"/></svg><svg class="estrella" viewBox="0 0 24 24" width="18" height="18"><path d="M12 2.8l2.8 5.7 6.3.9-4.5 4.4 1.1 6.3L12 17.1l-5.7 3 1.1-6.3L2.9 9.4l6.3-.9z"/></svg><svg class="estrella vacia" viewBox="0 0 24 24" width="18" height="18"><path d="M12 2.8l2.8 5.7 6.3.9-4.5 4.4 1.1 6.3L12 17.1l-5.7 3 1.1-6.3L2.9 9.4l6.3-.9z"/></svg></p>
+                <p class="testimonio-empresa">Boreas · Equipos agroindustriales</p>
+                <p class="testimonio-cargo">Gerente</p>
+              </div>
+            </div>
             <blockquote>
               <p>Ardo Marketing nos brindó una excelente propuesta que está en ejecución, y los primeros resultados nos dejan muy contentos.</p>
             </blockquote>
-            <p class="testimonio-autor">Boreas</p>
           </li>
         </ul>
+      </div>
+    </section>
+
+    <!-- PLANES: precios publicados por la agencia; el anual aplica su promesa de "dos meses gratis" (10 × mensual) -->
+    <section class="seccion" id="planes" aria-labelledby="planes-titulo">
+      <div class="contenedor">
+        <div class="seccion-cabeza planes-cabeza">
+          <div>
+            <p class="etiqueta">Planes</p>
+            <h2 id="planes-titulo">Ajustamos cada plan a tus objetivos, tus recursos y tu mercado.</h2>
+          </div>
+          <div class="periodo" role="group" aria-label="Periodo de pago">
+            <button type="button" class="periodo-opcion" data-periodo="mes" aria-pressed="true">Mensual</button>
+            <button type="button" class="periodo-opcion" data-periodo="anual" aria-pressed="false">Anual <span class="periodo-ahorro">2 meses gratis</span></button>
+          </div>
+        </div>
+        <p class="visually-hidden" id="periodo-estado" role="status" aria-live="polite"></p>
+        <ul class="planes">
+          <li class="plan">
+            <h3>Investigación de mercados en el entorno digital</h3>
+            <p class="plan-precio"><span class="plan-desde">Desde</span> <span class="plan-valor" data-mes="2999990" data-anual="29999900">COP $2.999.990</span> <span class="plan-periodo">/ mes</span></p>
+            <ul class="plan-items">
+              <li>Diagnóstico digital de la empresa</li>
+              <li>Análisis de buyer persona</li>
+              <li>Benchmark de competidores directos e indirectos</li>
+              <li>Mapa de oportunidades y plan de acción</li>
+              <li>Recomendaciones priorizadas para estrategia y contenidos</li>
+            </ul>
+            <a class="boton boton-fantasma boton-ancho" href="#contacto" data-plan="investigacion">Cotizar este plan<span class="visually-hidden">: Investigación de mercados en el entorno digital</span></a>
+          </li>
+          <li class="plan plan-destacado">
+            <h3>Manejo profesional de redes sociales</h3>
+            <p class="plan-precio"><span class="plan-desde">Desde</span> <span class="plan-valor" data-mes="999990" data-anual="9999900">COP $999.990</span> <span class="plan-periodo">/ mes</span></p>
+            <ul class="plan-items">
+              <li>Estrategia y calendario mensual de contenido</li>
+              <li>Ejecución de diseños</li>
+              <li>Ejecución de videos</li>
+              <li>Seguimiento y optimización de contenido</li>
+              <li>Métricas mensuales</li>
+            </ul>
+            <a class="boton boton-marca boton-ancho" href="#contacto" data-plan="redes">Cotizar este plan<span class="visually-hidden">: Manejo profesional de redes sociales</span></a>
+          </li>
+          <li class="plan">
+            <h3>Pautas publicitarias por planes</h3>
+            <p class="plan-precio"><span class="plan-desde">Desde</span> <span class="plan-valor" data-mes="699000" data-anual="6990000">COP $699.000</span> <span class="plan-periodo">/ mes</span></p>
+            <ul class="plan-items">
+              <li>Estrategia de pauta</li>
+              <li>Configuración e implementación</li>
+              <li>Optimización continua</li>
+              <li>Reporte y métricas mensuales</li>
+            </ul>
+            <a class="boton boton-fantasma boton-ancho" href="#contacto" data-plan="pauta">Cotizar este plan<span class="visually-hidden">: Pautas publicitarias por planes</span></a>
+          </li>
+        </ul>
+        <p class="planes-nota">Precios de referencia publicados por la agencia. Cada propuesta final es una cotización personalizada.</p>
       </div>
     </section>
 
@@ -234,7 +352,7 @@
       <div class="contenedor proceso-rejilla">
         <div class="proceso-fijo">
           <p class="etiqueta">Cómo trabajamos</p>
-          <h2 id="proceso-titulo">Ajustamos cada plan a tus objetivos, tus recursos y tu mercado.</h2>
+          <h2 id="proceso-titulo">Un proceso claro, de principio a fin.</h2>
         </div>
         <ol class="pasos">
           <li class="paso">
@@ -289,6 +407,18 @@
           </div>
 
           <div class="campo">
+            <label for="interes">¿Qué te interesa?</label>
+            <select id="interes" name="interes" required>
+              <option value="">Elige una opción</option>
+              <option value="investigacion">Investigación de mercados</option>
+              <option value="redes">Manejo de redes sociales</option>
+              <option value="pauta">Pauta publicitaria</option>
+              <option value="whatsapp">Capacitación en WhatsApp</option>
+              <option value="asesoria">Aún no lo sé: quiero asesoría</option>
+            </select>
+          </div>
+
+          <div class="campo">
             <label for="whatsapp">WhatsApp <span class="opcional">(opcional)</span></label>
             <input id="whatsapp" name="whatsapp" type="tel" autocomplete="tel" inputmode="tel">
           </div>
@@ -328,7 +458,7 @@
       <img src="img/logo-naranja.webp" width="140" height="51" alt="ARDO Marketing" loading="lazy">
       <p>
         Concepto de rediseño independiente por <a href="../">Sebastián Moreno</a>. No es el sitio oficial de ARDO Marketing.
-        <a href="../#caso-ardo">Volver al caso de estudio</a>
+        <a href="../#caso-ardo">Volver al caso de estudio</a> · <a href="sistema.html">Sistema visual y paleta</a>
       </p>
     </div>
   </footer>
