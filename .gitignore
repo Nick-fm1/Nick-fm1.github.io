@@ -8,3 +8,7 @@ Thumbs.db
 
 # Logs y temporales
 *.log
+
+# Configuración local de Claude Code y herramientas de validación (no se publica)
+.claude/
+node_modules/

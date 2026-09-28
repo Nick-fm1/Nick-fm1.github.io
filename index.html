@@ -1,27 +1,43 @@
-<!doctype html>
-<html lang="es" class="no-js">
+<!DOCTYPE html>
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Portafolio de Sebastián Moreno — Desarrollador Web especialista en UX/UI, Frontend y Productos Full-Stack.">
+  <meta name="description" content="Portafolio de Sebastián Moreno — Desarrollador Web especialista en UX/UI, Frontend y Productos Full-Stack. Caso destacado: auditoría de conversión, móvil y WCAG AA de ARDO Marketing.">
   <meta name="theme-color" content="#0f172a">
-  <meta name="color-scheme" content="dark light">
+  <meta name="color-scheme" content="light dark">
 
-  <!-- Open Graph / Redes Sociales -->
+  <link rel="canonical" href="https://nick-fm1.github.io/">
+
+  <!-- Open Graph / Redes Sociales (las redes exigen URLs absolutas) -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Sebastián Moreno — Web & Product Developer">
-  <meta property="og:description" content="Diseño experiencias claras y las convierto en productos digitales escalables.">
-  <meta property="og:image" content="og-image.png">
+  <meta property="og:locale" content="es_CO">
+  <meta property="og:url" content="https://nick-fm1.github.io/">
+  <meta property="og:title" content="Sebastián Moreno — Web &amp; Product Developer">
+  <meta property="og:description" content="Diseño experiencias claras y las convierto en productos digitales escalables. Caso destacado: auditoría de conversión, móvil y WCAG AA de ARDO Marketing.">
+  <meta property="og:image" content="https://nick-fm1.github.io/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Portada del portafolio de Sebastián Moreno: Diseño experiencias claras. Las convierto en producto.">
+  <meta name="twitter:card" content="summary_large_image">
 
-  <title>Sebastián Moreno — Web & Product Developer</title>
+  <title>Sebastián Moreno — Web &amp; Product Developer</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230f172a'/%3E%3Ctext x='16' y='21' font-family='monospace' font-size='14' font-weight='700' text-anchor='middle' fill='%23f8fafc'%3ESM%3C/text%3E%3C/svg%3E">
 
-  <!-- Preconexión a fuentes -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  
-  <!-- Carga del visor 3D en tiempo real con crossorigin corregido -->
-  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js" crossorigin="anonymous"></script>
+  <!-- Aplica el tema antes del primer pintado para evitar el destello de tema incorrecto -->
+  <script>
+    (function () {
+      var tema;
+      try { tema = localStorage.getItem('theme'); } catch (e) { tema = null; }
+      if (tema !== 'light' && tema !== 'dark') {
+        tema = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      document.documentElement.setAttribute('data-theme', tema);
+    })();
+  </script>
+
+  <!-- Fuente del titular (elemento LCP) precargada; las fuentes se sirven desde el propio dominio -->
+  <link rel="preload" href="fonts/plus-jakarta-sans-latin-var.woff2" as="font" type="font/woff2" crossorigin>
 
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -38,7 +54,7 @@
 
       <!-- Controles de Navegación + Modo Oscuro/Claro -->
       <div class="nav-actions">
-        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Cambiar tema de color" title="Cambiar tema">
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Cambiar a tema oscuro" title="Cambiar tema">
           <svg class="sun-icon" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
           <svg class="moon-icon" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
         </button>
@@ -51,6 +67,7 @@
 
       <div class="nav-links" id="nav-links">
         <a href="#proyectos" class="nav-item">Proyectos</a>
+        <a href="#caso-ardo" class="nav-item">Caso ARDO</a>
         <a href="#proceso" class="nav-item">Proceso</a>
         <a href="#sobre-mi" class="nav-item">Sobre mí</a>
         <a href="#contacto" class="button button-nav">Hablemos</a>
@@ -76,8 +93,8 @@
             Soy <strong>Sebastián Moreno</strong>, desarrollador web enfocado en <strong>UX/UI, Frontend y soluciones Full-Stack</strong>. Transformo problemas complejos en experiencias digitales funcionales, accesibles y listas para escalar.
           </p>
           <div class="hero-actions">
-            <a class="button button-primary" href="#proyectos">
-              Ver proyectos <span class="icon-arrow" aria-hidden="true">↓</span>
+            <a class="button button-primary" href="#caso-ardo">
+              Ver caso destacado <span class="icon-arrow" aria-hidden="true">↓</span>
             </a>
             <a class="button button-outline" href="#contacto">
               Hablemos de tu idea <span class="icon-arrow" aria-hidden="true">↗</span>
@@ -85,90 +102,98 @@
           </div>
         </div>
 
-        <!-- Visualizador 3D Interactivo en el Hero -->
-        <div class="hero-3d-wrapper" aria-label="Visualizador 3D Interactivo">
+        <!-- Visualizador 3D: se carga solo cuando el visitante lo pide (model-viewer + modelo ≈ 3 MB) -->
+        <div class="hero-3d-wrapper" id="hero-3d">
           <div class="glow-backdrop" aria-hidden="true"></div>
 
-          <model-viewer
-            id="hero-model"
-            src="https://modelviewer.dev/shared-assets/models/Astronaut.glb"
-            alt="Objeto 3D interactivo de Sebastián Moreno"
-            auto-rotate
-            rotation-per-second="15deg"
-            camera-controls
-            disable-zoom
-            shadow-intensity="1.5"
-            shadow-softness="0.8"
-            exposure="1.1"
-            interaction-prompt="none"
-            loading="eager">
-            
-            <div class="badge-3d-hint" aria-hidden="true">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
-              <span>3D Interactivo · Arrastra para girar</span>
-            </div>
-          </model-viewer>
+          <div class="hero-3d-poster" id="hero-3d-poster">
+            <svg class="poster-shape" aria-hidden="true" width="160" height="160" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.6" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+            <button class="button button-outline" type="button" id="load-3d">
+              Activar vista 3D <span class="button-meta">≈ 3 MB</span>
+            </button>
+            <p class="poster-note">Se carga bajo demanda para que la página abra rápido.</p>
+          </div>
+
+          <div class="badge-3d-hint" id="hero-3d-hint" aria-hidden="true" hidden>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+            <span>Arrastra para girar</span>
+          </div>
         </div>
       </div>
 
-      <div class="stack-bar" aria-label="Tecnologías principales">
-        <span class="stack-tag">UX/UI</span>
-        <span class="stack-tag">FRONTEND</span>
-        <span class="stack-tag">FULL-STACK</span>
-        <span class="stack-tag">WEB DESIGN</span>
-      </div>
+      <ul class="stack-bar">
+        <li class="stack-tag">UX/UI</li>
+        <li class="stack-tag">FRONTEND</li>
+        <li class="stack-tag">FULL-STACK</li>
+        <li class="stack-tag">WEB DESIGN</li>
+      </ul>
     </section>
 
     <!-- Sección Proyectos -->
-    <section class="section container" id="proyectos">
+    <section class="section container" id="proyectos" aria-labelledby="proyectos-titulo">
       <header class="section-heading">
         <div>
           <p class="eyebrow">Trabajo Seleccionado</p>
-          <h2>Proyectos con problema, criterio y resultado</h2>
+          <h2 id="proyectos-titulo">Proyectos con problema, criterio y resultado</h2>
         </div>
         <p class="section-desc">
           Un caso de estudio no muestra solo pantallas: explica la estrategia, la arquitectura técnica y el impacto real.
         </p>
       </header>
 
-      <!-- Proyecto Destacado con Modelo 3D -->
-      <article class="project project-featured">
-        <div class="project-visual audit-visual" aria-label="Visualización 3D para ARDO Marketing">
+      <!-- Proyecto Destacado -->
+      <article class="project project-featured" aria-labelledby="ardo-card-titulo">
+        <div class="project-visual">
           <div class="browser-chrome" aria-hidden="true">
             <span class="browser-dot red"></span>
             <span class="browser-dot yellow"></span>
             <span class="browser-dot green"></span>
-            <span class="browser-url">3d-audit / ardo-marketing.com</span>
+            <span class="browser-url">lighthouse · ardomarketing.com · móvil</span>
           </div>
-          
-          <div class="project-3d-container">
-            <model-viewer
-              id="project-model"
-              src="https://modelviewer.dev/shared-assets/models/NeilArmstrong.glb"
-              alt="Modelo 3D del caso ARDO"
-              auto-rotate
-              camera-controls
-              disable-zoom
-              shadow-intensity="1"
-              exposure="1.0">
-            </model-viewer>
+
+          <div class="scorecard">
+            <p class="scorecard-title">Estado medido en producción <span>(mediana de 3 corridas)</span></p>
+            <ul class="score-list">
+              <li class="score score--bad" style="--score: 32">
+                <svg class="score-ring" viewBox="0 0 36 36" aria-hidden="true"><circle class="score-track" cx="18" cy="18" r="15.9"/><circle class="score-value" cx="18" cy="18" r="15.9" pathLength="100"/></svg>
+                <span class="score-num">32</span>
+                <span class="score-label">Rendimiento</span>
+              </li>
+              <li class="score score--mid" style="--score: 85">
+                <svg class="score-ring" viewBox="0 0 36 36" aria-hidden="true"><circle class="score-track" cx="18" cy="18" r="15.9"/><circle class="score-value" cx="18" cy="18" r="15.9" pathLength="100"/></svg>
+                <span class="score-num">85</span>
+                <span class="score-label">Accesibilidad</span>
+              </li>
+              <li class="score score--mid" style="--score: 75">
+                <svg class="score-ring" viewBox="0 0 36 36" aria-hidden="true"><circle class="score-track" cx="18" cy="18" r="15.9"/><circle class="score-value" cx="18" cy="18" r="15.9" pathLength="100"/></svg>
+                <span class="score-num">75</span>
+                <span class="score-label">Buenas prácticas</span>
+              </li>
+              <li class="score score--mid" style="--score: 85">
+                <svg class="score-ring" viewBox="0 0 36 36" aria-hidden="true"><circle class="score-track" cx="18" cy="18" r="15.9"/><circle class="score-value" cx="18" cy="18" r="15.9" pathLength="100"/></svg>
+                <span class="score-num">85</span>
+                <span class="score-label">SEO</span>
+              </li>
+            </ul>
+            <p class="scorecard-alert"><strong>0 de 3</strong> canales de contacto de la home llegan a la agencia.</p>
           </div>
         </div>
 
         <div class="project-copy">
-          <p class="project-number">01 / Caso de Estudio UX</p>
-          <h3>ARDO Marketing: Optimización de conversión y UX móvil</h3>
-          <p>Auditoría integral para detectar fricciones en los embudos de conversión, rendimiento técnico y arquitectura de información.</p>
-          
-          <ul class="tags-list" aria-label="Tecnologías y habilidades">
+          <p class="project-number">01 / Caso de estudio · Flagship</p>
+          <h3 id="ardo-card-titulo">ARDO Marketing: el embudo perdía leads antes de empezar</h3>
+          <p>Auditoría de una agencia de marketing en producción: embudo de conversión, layout móvil, WCAG 2.2 AA y rendimiento. Evidencia medida con Lighthouse, axe-core y Puppeteer, con código de solución priorizado por impacto.</p>
+
+          <ul class="tags-list">
             <li>UX AUDIT</li>
-            <li>RESPONSIVE DESIGN</li>
-            <li>CRO & CONVERSIÓN</li>
+            <li>CRO</li>
+            <li>WCAG 2.2 AA</li>
+            <li>WEB PERF</li>
           </ul>
 
-          <button class="button button-secondary" type="button" data-dialog-open="ardo-dialog">
-            Ver detalle del caso <span aria-hidden="true">↗</span>
-          </button>
+          <a class="button button-secondary" href="#caso-ardo">
+            Leer el caso completo <span aria-hidden="true">↓</span>
+          </a>
         </div>
       </article>
 
@@ -190,12 +215,220 @@
       </div>
     </section>
 
+    <!-- Caso de Estudio ARDO Marketing -->
+    <section class="section case" id="caso-ardo" aria-labelledby="caso-titulo">
+      <div class="container">
+        <header class="case-header">
+          <p class="eyebrow">Caso de estudio · ARDO Marketing</p>
+          <h2 id="caso-titulo">Tres canales de contacto, cero leads posibles.</h2>
+          <p class="case-lede">
+            La home de una agencia de marketing es su vendedor principal. Al auditarla encontré que el correo, el teléfono y el WhatsApp del menú móvil <strong>no llegaban a la agencia</strong>, y que el botón principal medía 65 × 11 px en un teléfono.
+          </p>
+          <dl class="case-meta">
+            <div><dt>Rol</dt><dd>Auditoría independiente y propuesta técnica</dd></div>
+            <div><dt>Stack auditado</dt><dd>WordPress · Elementor · Slider Revolution</dd></div>
+            <div><dt>Herramientas</dt><dd>Lighthouse 12 · axe-core 4 · Puppeteer</dd></div>
+            <div><dt>Medición</dt><dd><time datetime="2026-09-27">27 sep 2026</time></dd></div>
+          </dl>
+        </header>
+
+        <!-- KPIs medidos -->
+        <ul class="kpi-grid">
+          <li class="kpi kpi--critical">
+            <span class="kpi-value">0 / 3</span>
+            <span class="kpi-label">canales de contacto funcionales</span>
+            <span class="kpi-source">Inspección de enlaces</span>
+          </li>
+          <li class="kpi">
+            <span class="kpi-value">65×11<small>px</small></span>
+            <span class="kpi-label">CTA principal en móvil, texto de 4 px</span>
+            <span class="kpi-source">Puppeteer · 390 px</span>
+          </li>
+          <li class="kpi">
+            <span class="kpi-value">13,3<small>s</small></span>
+            <span class="kpi-label">Largest Contentful Paint móvil</span>
+            <span class="kpi-source">Lighthouse · mediana de 3</span>
+          </li>
+          <li class="kpi">
+            <span class="kpi-value">39</span>
+            <span class="kpi-label">fallos WCAG críticos o serios</span>
+            <span class="kpi-source">axe-core · 65 en total</span>
+          </li>
+        </ul>
+
+        <!-- STAR -->
+        <ol class="star-grid">
+          <li class="star-card">
+            <span class="star-letter" aria-hidden="true">S</span>
+            <h3>Situación</h3>
+            <p>Sitio sobre un tema comercial de WordPress. Al adaptar la plantilla quedaron restos de la demo: datos de contacto ficticios, 28 enlaces vacíos y rutas de la instalación original.</p>
+          </li>
+          <li class="star-card">
+            <span class="star-letter" aria-hidden="true">T</span>
+            <h3>Tarea</h3>
+            <p>Encontrar dónde se pierde el lead entre "me interesa" y "contacté a la agencia", y priorizar cada corrección por impacto en conversión ÷ esfuerzo.</p>
+          </li>
+          <li class="star-card">
+            <span class="star-letter" aria-hidden="true">A</span>
+            <h3>Acción</h3>
+            <p>Lighthouse en 3 corridas, axe-core a 390 y 320 px, un script propio para medir áreas táctiles y revisión de cada <code>href</code> y su código HTTP. De ahí salió un plan P0–P2 con el código de cada solución.</p>
+          </li>
+          <li class="star-card star-card--result">
+            <span class="star-letter" aria-hidden="true">R</span>
+            <h3>Resultado <span class="pill">proyectado</span></h3>
+            <p>Las correcciones P0 (4 atributos <code>href</code>, menos de 1 hora) restablecen el 100 % de los contactos iniciados desde la home. Objetivos: 0 fallos WCAG serios y LCP ≤ 2,5 s.</p>
+          </li>
+        </ol>
+
+        <!-- Antes vs Después -->
+        <h3 class="case-subtitle">Antes vs. después</h3>
+
+        <!-- 1. CTA móvil -->
+        <article class="compare" aria-labelledby="cmp-cta">
+          <div class="compare-intro">
+            <p class="compare-num">01 · Embudo móvil</p>
+            <h4 id="cmp-cta">El CTA principal debe poder tocarse</h4>
+            <p>Slider Revolution escala el lienzo de escritorio a 390 px: el botón "Trabajemos juntos" queda de 65 × 11 px y sin <code>href</code>. La propuesta usa un hero en HTML y una barra de contacto fija de 48 px de alto.</p>
+            <p class="compare-criteria">WCAG 2.5.8 · Tamaño mínimo del objetivo (24 × 24 px)</p>
+          </div>
+          <div class="compare-pair">
+            <figure class="phone phone--before">
+              <div class="phone-screen" aria-hidden="true">
+                <div class="mock-bar mock-bar--brand"></div>
+                <div class="mock-banner">
+                  <span class="mock-line mock-line--lg"></span>
+                  <span class="mock-line"></span>
+                  <span class="mock-line mock-line--xs"></span>
+                  <span class="mock-cta-tiny"></span>
+                </div>
+                <div class="mock-block"></div>
+                <div class="mock-block mock-block--short"></div>
+              </div>
+              <figcaption><span class="tag-before">Antes</span> CTA de 65 × 11 px, texto de 4 px, dentro de un slider.</figcaption>
+            </figure>
+            <figure class="phone phone--after">
+              <div class="phone-screen" aria-hidden="true">
+                <div class="mock-bar"></div>
+                <div class="mock-hero">
+                  <span class="mock-line mock-line--lg"></span>
+                  <span class="mock-line mock-line--lg"></span>
+                  <span class="mock-line"></span>
+                  <span class="mock-cta"></span>
+                </div>
+                <div class="mock-block mock-block--short"></div>
+                <div class="mock-sticky"><span class="mock-cta mock-cta--full"></span></div>
+              </div>
+              <figcaption><span class="tag-after">Después</span> CTA de ancho completo y 48 px de alto, siempre visible.</figcaption>
+            </figure>
+          </div>
+        </article>
+
+        <!-- 2. Canales de contacto -->
+        <article class="compare" aria-labelledby="cmp-links">
+          <div class="compare-intro">
+            <p class="compare-num">02 · Canales de contacto</p>
+            <h4 id="cmp-links">El texto dice una cosa, el enlace hace otra</h4>
+            <p>El correo visible es el de la agencia, pero el <code>mailto</code> apunta a <code>example.com</code>. El teléfono es el de la demo del tema, y el WhatsApp móvil usa <code>http://</code> con un número distinto al que se muestra.</p>
+            <p class="compare-criteria">Prioridad P0 · menos de 1 hora · desbloquea el 100 % de los contactos</p>
+          </div>
+          <div class="compare-pair compare-pair--code">
+            <figure class="code-card code-card--before">
+              <figcaption><span class="tag-before">Antes</span> HTML en producción</figcaption>
+              <pre tabindex="0"><code>&lt;!-- Menú móvil --&gt;
+&lt;a href="<mark>http://+57%20314…</mark>"&gt;+57 315…&lt;/a&gt;
+
+&lt;!-- Footer --&gt;
+&lt;a href="mailto:<mark>info@example.com</mark>"&gt;
+  info@ardomarketing.com
+&lt;/a&gt;
+&lt;a href="tel:<mark>%20+208-666-0112</mark>"&gt;
+  +208-666-0112
+&lt;/a&gt;</code></pre>
+            </figure>
+            <figure class="code-card code-card--after">
+              <figcaption><span class="tag-after">Después</span> Un número, protocolos correctos y medición</figcaption>
+              <pre tabindex="0"><code>&lt;a href="https://wa.me/57XXXXXXXXXX"
+   data-evento="lead_whatsapp"&gt;
+  Escríbenos por WhatsApp
+&lt;/a&gt;
+&lt;a href="mailto:info@ardomarketing.com"
+   data-evento="lead_email"&gt;…&lt;/a&gt;
+&lt;a href="tel:+57XXXXXXXXXX"
+   data-evento="lead_llamada"&gt;…&lt;/a&gt;</code></pre>
+            </figure>
+          </div>
+        </article>
+
+        <!-- 3. Contraste -->
+        <article class="compare" aria-labelledby="cmp-contrast">
+          <div class="compare-intro">
+            <p class="compare-num">03 · Accesibilidad de marca</p>
+            <h4 id="cmp-contrast">El naranja de marca no alcanzaba para texto</h4>
+            <p>El blanco sobre <code>#fc4b08</code> da 3,42 : 1 y causa 21 de los fallos de contraste. Oscurecer el naranja solo en las superficies con texto conserva la identidad y cumple AA.</p>
+            <p class="compare-criteria">WCAG 1.4.3 · Contraste mínimo 4,5 : 1</p>
+          </div>
+          <div class="compare-pair">
+            <figure class="swatch">
+              <svg class="swatch-sample" viewBox="0 0 240 120" role="img" aria-label="Muestra: texto blanco sobre naranja #fc4b08, contraste 3,42 a 1, no cumple">
+                <rect width="240" height="120" rx="14" fill="#fc4b08"/>
+                <text x="24" y="72" fill="#ffffff" font-size="30" font-weight="700" font-family="Plus Jakarta Sans, system-ui, sans-serif">Contáctanos</text>
+              </svg>
+              <figcaption><span class="tag-before">Antes</span> <code>#fc4b08</code> · <strong>3,42 : 1</strong> · no cumple</figcaption>
+            </figure>
+            <figure class="swatch">
+              <svg class="swatch-sample" viewBox="0 0 240 120" role="img" aria-label="Muestra: texto blanco sobre naranja #c2410c, contraste 5,18 a 1, cumple AA">
+                <rect width="240" height="120" rx="14" fill="#c2410c"/>
+                <text x="24" y="72" fill="#ffffff" font-size="30" font-weight="700" font-family="Plus Jakarta Sans, system-ui, sans-serif">Contáctanos</text>
+              </svg>
+              <figcaption><span class="tag-after">Después</span> <code>#c2410c</code> · <strong>5,18 : 1</strong> · cumple AA</figcaption>
+            </figure>
+          </div>
+        </article>
+
+        <!-- Métricas -->
+        <div class="results">
+          <h3 class="case-subtitle">Métricas clave</h3>
+          <p class="results-note">
+            <strong>Antes</strong> está medido en producción. <strong>Objetivo</strong> es una proyección con su base de cálculo: la propuesta todavía no está desplegada en el sitio de ARDO.
+          </p>
+          <!-- role="region" + tabindex: contenedor con scroll horizontal operable por teclado (patrón recomendado para tablas anchas) -->
+          <div class="table-wrap" tabindex="0" role="region" aria-label="Tabla de métricas antes y objetivo">
+            <table class="results-table">
+              <thead>
+                <tr>
+                  <th scope="col">Métrica</th>
+                  <th scope="col">Antes <span class="th-sub">medido</span></th>
+                  <th scope="col">Objetivo <span class="th-sub">proyectado</span></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><th scope="row">Canales de contacto funcionales</th><td class="val-bad">0 / 3</td><td class="val-good">3 / 3</td></tr>
+                <tr><th scope="row">CTA principal en móvil</th><td class="val-bad">65 × 11 px</td><td class="val-good">≥ 44 × 44 px</td></tr>
+                <tr><th scope="row">Fallos axe críticos y serios</th><td class="val-bad">39</td><td class="val-good">0</td></tr>
+                <tr><th scope="row">Lighthouse Rendimiento (móvil)</th><td class="val-bad">32</td><td class="val-good">≥ 75</td></tr>
+                <tr><th scope="row">Largest Contentful Paint</th><td class="val-bad">13,3 s</td><td class="val-good">≤ 2,5 s</td></tr>
+                <tr><th scope="row">Lighthouse Accesibilidad</th><td>85</td><td class="val-good">≥ 95</td></tr>
+                <tr><th scope="row">Enlaces vacíos</th><td class="val-bad">28</td><td class="val-good">0</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="case-footer">
+          <p>La auditoría completa incluye la metodología, cada hallazgo con su criterio WCAG, el código de cada solución y el plan de implementación priorizado.</p>
+          <a class="button button-primary" href="https://github.com/Nick-fm1/Nick-fm1.github.io/blob/main/guia-ardo-marketing.md">
+            Leer la auditoría técnica <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
     <!-- Sección Proceso -->
-    <section class="section process-section" id="proceso">
+    <section class="section process-section" id="proceso" aria-labelledby="proceso-titulo">
       <div class="container">
         <p class="eyebrow">Mi Metodología</p>
         <div class="process-intro">
-          <h2>Menos suposiciones.<br>Mejores decisiones.</h2>
+          <h2 id="proceso-titulo">Menos suposiciones.<br>Mejores decisiones.</h2>
           <p>Integro visión de negocio, diseño de interfaces y desarrollo limpio para garantizar productos sólidos desde el día uno.</p>
         </div>
 
@@ -233,10 +466,10 @@
     </section>
 
     <!-- Sección Sobre Mí -->
-    <section class="section container about" id="sobre-mi">
+    <section class="section container about" id="sobre-mi" aria-labelledby="sobre-mi-titulo">
       <p class="eyebrow">Perfil Profesional</p>
       <div class="about-grid">
-        <h2>Diseño y código no son etapas aisladas, son la misma conversación.</h2>
+        <h2 id="sobre-mi-titulo">Diseño y código no son etapas aisladas, son la misma conversación.</h2>
         <div class="about-content">
           <p>Me especializo en cerrar la brecha entre el diseño visual y la ingeniería frontend. Mi meta es construir productos digitales que no solo se vean impecables, sino que respondan rápido y resuelvan problemas reales.</p>
 
@@ -251,7 +484,7 @@
             </div>
             <div class="info-item">
               <dt>Disponibilidad</dt>
-              <dd>Proyectos Freelance & Contratación Full-Time</dd>
+              <dd>Proyectos Freelance &amp; Contratación Full-Time</dd>
             </div>
           </dl>
         </div>
@@ -259,33 +492,34 @@
     </section>
 
     <!-- Sección Contacto -->
-    <section class="contact-section" id="contacto">
+    <section class="contact-section" id="contacto" aria-labelledby="contacto-titulo">
       <div class="container contact-grid">
         <div class="contact-header">
           <p class="eyebrow">Contacto Directo</p>
-          <h2>¿Tienes un proyecto o idea en mente?</h2>
+          <h2 id="contacto-titulo">¿Tienes un proyecto o idea en mente?</h2>
           <p>Estoy disponible para colaborar en productos digitales, consultorías UX o desarrollo de software.</p>
         </div>
 
         <div class="contact-card">
           <p class="contact-subtitle">Elige cómo prefieres escribirme:</p>
-          
+
           <div class="contact-buttons">
-            <a class="button button-primary" href="mailto:sfmorenob@gmail.com" target="_blank" rel="noopener">
-              Enviar Email Directo <span aria-hidden="true">✉️</span>
+            <a class="button button-primary" href="mailto:sfmorenob@gmail.com">
+              Enviar email directo <span aria-hidden="true">✉</span>
             </a>
 
-            <a class="button button-outline" href="https://mail.google.com/mail/?view=cm&fs=1&to=sfmorenob@gmail.com" target="_blank" rel="noopener">
-              Abrir en Gmail Web <span aria-hidden="true">↗</span>
+            <a class="button button-outline" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=sfmorenob@gmail.com" target="_blank" rel="noopener">
+              Abrir en Gmail Web <span aria-hidden="true">↗</span><span class="visually-hidden">(se abre en una pestaña nueva)</span>
             </a>
           </div>
 
           <div class="email-copy-box">
             <code id="email-text">sfmorenob@gmail.com</code>
-            <button type="button" class="button-copy" id="copy-email-btn" aria-label="Copiar correo electrónico">
-              <span id="copy-text">Copiar</span>
+            <button type="button" class="button-copy" id="copy-email-btn">
+              <span id="copy-text">Copiar</span><span class="visually-hidden"> correo electrónico</span>
             </button>
           </div>
+          <p class="copy-status" id="copy-status" role="status" aria-live="polite"></p>
         </div>
       </div>
     </section>
@@ -297,23 +531,11 @@
       <a class="brand" href="#inicio" aria-label="Volver al inicio">
         SM<span class="brand-dot" aria-hidden="true">.</span>
       </a>
-      <p>Diseñado y desarrollado por <strong>Sebastián Moreno</strong> · <span id="year"></span></p>
-      <a class="back-to-top" href="#inicio">Volver arriba ↑</a>
+      <p>Diseñado y desarrollado por <strong>Sebastián Moreno</strong> · <span id="year">2026</span></p>
+      <a class="back-to-top" href="#inicio">Volver arriba <span aria-hidden="true">↑</span></a>
     </div>
   </footer>
 
-  <!-- Diálogo / Modal para Caso de Estudio -->
-  <dialog class="case-dialog" id="ardo-dialog" aria-labelledby="ardo-title">
-    <div class="dialog-content">
-      <button class="dialog-close" type="button" data-dialog-close aria-label="Cerrar modal">&times;</button>
-      <p class="eyebrow">Caso de Estudio en Documentación</p>
-      <h2 id="ardo-title">Auditoría UX — ARDO Marketing</h2>
-      <p>Este caso detalla la reestructuración completa de los embudos de captura, resolución de errores visuales en layouts móviles y la optimización de accesibilidad WCAG AA.</p>
-      <p class="dialog-note"><em>Nota: Se revelarán únicamente métricas y entregables autorizados por la marca.</em></p>
-      <button class="button button-secondary" type="button" data-dialog-close>Entendido</button>
-    </div>
-  </dialog>
-
-  <script src="script.js"></script>
+  <script src="script.js" defer></script>
 </body>
 </html>
