@@ -943,7 +943,6 @@ model-viewer:active {
   stroke-dasharray: var(--score) 100;
 }
 
-.score--bad { color: var(--bad); }
 .score--mid { color: var(--mid); }
 
 .score-num {

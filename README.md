@@ -2,7 +2,7 @@
 
 > **Web & Product Developer** especialista en **UX/UI, Frontend e Ingeniería Full-Stack**. Diseño experiencias claras, accesibles y las convierto en productos digitales escalables y de alto rendimiento.
 
-![Lighthouse Performance](https://img.shields.io/badge/Lighthouse_Performance-90-brightgreen?style=for-the-badge)
+![Lighthouse Performance](https://img.shields.io/badge/Lighthouse_Performance-99-brightgreen?style=for-the-badge)
 ![Lighthouse Accessibility](https://img.shields.io/badge/Lighthouse_Accessibility-100-brightgreen?style=for-the-badge)
 ![axe-core](https://img.shields.io/badge/axe--core_WCAG_AA-0_violaciones-brightgreen?style=for-the-badge)
 ![Stack](https://img.shields.io/badge/Stack-HTML5_%7C_CSS3_%7C_JS_Vanilla_%7C_WebGL-blue?style=for-the-badge)
@@ -17,7 +17,7 @@ Auditoría del sitio en producción de una agencia de marketing: **embudo de con
 |---|---|
 | Canales de contacto de la home que llegan a la agencia | **0 de 3** (`mailto` a `example.com`, teléfono de la plantilla demo, WhatsApp con `http://`) |
 | CTA principal del hero en un móvil de 390 px | **65 × 11 px**, texto de 4 px |
-| Lighthouse Performance móvil / LCP | **32** / **13,3 s** (mediana de 3 corridas) |
+| Lighthouse Performance móvil / LCP | **57** / **11,5 s** (mediana de 3 corridas) |
 | Fallos WCAG críticos o serios (axe-core) | **39** |
 
 📄 **[Leer la auditoría técnica completa →](guia-ardo-marketing.md)** (formato STAR, metodología, hallazgos por criterio WCAG, código antes/después y plan P0–P2).
@@ -36,19 +36,19 @@ Auditoría del sitio en producción de una agencia de marketing: **embudo de con
 
 ## 📊 Métricas del propio portafolio
 
-Lighthouse 12 móvil, mediana de 3 corridas, antes y después de esta refactorización:
+Lighthouse 12 móvil, mediana de 3 corridas, antes y después de esta refactorización. Ambas versiones se midieron en las mismas condiciones, bloqueando el script que el antivirus de la máquina inyecta en cada página. En producción (https://nick-fm1.github.io/) el resultado es Performance 99, Accessibility 100, Best Practices 100 y SEO 100.
 
 | Métrica | Antes | Después |
 |---|---|---|
-| Performance | 30 | **90** |
+| Performance | 39 | **99** |
 | Accessibility | 96 | **100** |
-| Largest Contentful Paint | 6,2 s | **3,1 s** |
-| Total Blocking Time | 4.765 ms | **0 ms** |
+| Largest Contentful Paint | 18,9 s | **1,8 s** |
+| Total Blocking Time | 1.219 ms | **0 ms** |
 | Peso transferido en la carga inicial | 3.013 KiB | **122 KiB** |
 | Peticiones | 11 | **6** |
 | Violaciones axe-core (claro / oscuro) | 8 / 12 | **0 / 0** |
 
-Peso y peticiones excluyen los scripts que inyecta el antivirus de la máquina de medición. Casi todo el ahorro vino de dos decisiones: retirar un modelo 3D decorativo de 8,9 MB de la tarjeta del caso, y cargar el visor del hero solo cuando el visitante lo pide. Autoalojar las fuentes llevó Performance de 79 a 90 y el LCP de 3,9 s a 3,1 s.
+Casi todo el ahorro vino de dos decisiones: retirar un modelo 3D decorativo de 8,9 MB de la tarjeta del caso, y cargar el visor del hero solo cuando el visitante lo pide. Autoalojar las fuentes eliminó además la cadena de peticiones a Google Fonts.
 
 ## ✅ Validación
 

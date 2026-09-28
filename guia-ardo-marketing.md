@@ -16,14 +16,14 @@
 
 La home de ARDO Marketing tiene un problema más grave que la velocidad o el diseño: **los tres canales de contacto visibles están rotos o apuntan a datos de la plantilla de demostración**. Un visitante convencido que intenta escribir por correo, llamar o abrir WhatsApp desde el menú móvil no llega a la agencia.
 
-A eso se suman un CTA principal ilegible en móvil (65 × 11 px, texto de 4 px), un rendimiento móvil de 32/100 y 65 incumplimientos automáticos de WCAG (39 críticos o serios).
+A eso se suman un CTA principal ilegible en móvil (65 × 11 px, texto de 4 px), un rendimiento móvil de 57/100 con un LCP de 11,5 s y 65 incumplimientos automáticos de WCAG (39 críticos o serios).
 
 | Indicador | Medido (antes) | Objetivo (después) |
 |---|---|---|
 | Canales de contacto funcionales en la home | **0 de 3** | 3 de 3 |
 | Tamaño del CTA principal del hero (móvil 390 px) | **65 × 11 px** · fuente 4 px | ≥ 44 × 44 px · fuente ≥ 16 px |
-| Lighthouse Performance móvil (mediana de 3) | **32 / 100** | ≥ 75 / 100 |
-| Largest Contentful Paint móvil (mediana) | **13,3 s** | ≤ 2,5 s |
+| Lighthouse Performance móvil (mediana de 3) | **57 / 100** | ≥ 90 / 100 |
+| Largest Contentful Paint móvil (mediana) | **11,5 s** | ≤ 2,5 s |
 | Violaciones axe-core (WCAG A/AA + buenas prácticas) | **65 nodos** en 9 reglas · 2 críticas | 0 críticas y 0 serias |
 | Enlaces vacíos (`href=""` o `href="#"`) | **28** | 0 |
 
@@ -33,7 +33,7 @@ A eso se suman un CTA principal ilegible en móvil (65 × 11 px, texto de 4 px),
 
 Todo lo que se reporta como "medido" se puede reproducir:
 
-1. **Lighthouse 12** en modo móvil (throttling simulado de 4G lenta y CPU 4×), **3 corridas**; se reporta la mediana. La primera corrida coincidió con carga de CPU local y dio la cifra más baja (25), por eso no se usa sola.
+1. **Lighthouse 12** en modo móvil (throttling simulado de 4G lenta y CPU 4×), **3 corridas**; se reporta la mediana. Se bloquea el script que el antivirus de la máquina de medición inyecta en cada página (180 KiB, bloqueante): sin ese bloqueo, el rendimiento medido de ARDO caía de 57 a 32 y el de cualquier sitio salía distorsionado.
 2. **axe-core 4** inyectado con Puppeteer sobre Chrome real, viewport 390 × 844 (iPhone 12–15) y 320 px (el mínimo de WCAG 1.4.10 *Reflow*), después de recorrer la página para disparar las animaciones de entrada.
 3. **Script propio de chequeo móvil**: desbordamiento horizontal, áreas táctiles menores de 24 × 24 px (WCAG 2.5.8) y tamaño renderizado real de los CTA.
 4. **Inspección manual del HTML servido** (`curl`): landmarks, jerarquía de encabezados, formularios, destinos de cada enlace y códigos HTTP de los destinos.
@@ -103,8 +103,8 @@ Además: 41 de 46 imágenes sin `width`/`height`, 40 con `alt=""` (incluidos los
 
 | Hallazgo | Evidencia (Lighthouse, mediana) | Corrección |
 |---|---|---|
-| LCP de 13,3 s | El elemento LCP es una imagen **decorativa** (`bg-shape-4.png`) con `loading="lazy"`: 9,8 s de *load delay*. | Quitar `lazy` a lo que está sobre el pliegue, `fetchpriority="high"` a la imagen real del hero, WebP/AVIF (≈ 283 KiB de ahorro). |
-| 35 scripts y 42 hojas de estilo, 128 peticiones, 2,6 MB | jQuery + jQuery Migrate, SoundJS, efectos *ripples*, *reveal*, *floating*, WOW.js, Swiper, Magnific Popup… | Desactivar los módulos de Xpro que no se usan (sonido, ripples), cargar con `defer`; ~2,2 s de bloqueo de render. |
+| LCP de 11,5 s | El elemento LCP es una imagen **decorativa** (`bg-shape-4.png`) con `loading="lazy"`: es lo último que se pinta, después del logo y del primer título (confirmado con `PerformanceObserver` en Chrome). | Quitar `lazy` a lo que está sobre el pliegue, `fetchpriority="high"` a la imagen real del hero, WebP/AVIF (≈ 283 KiB de ahorro). |
+| 34 scripts y 42 hojas de estilo, 123 peticiones, 2,4 MB | jQuery + jQuery Migrate, SoundJS, efectos *ripples*, *reveal*, *floating*, WOW.js, Swiper, Magnific Popup… | Desactivar los módulos de Xpro que no se usan (sonido, ripples) y cargar el resto con `defer`: 1,4 s de ejecución de JS en el arranque. |
 | 972 KiB de fuentes | 15 archivos: Font Awesome completo (solo se usan unos 10 íconos) + varios pesos de Poppins y Roboto. | Íconos como SVG inline; 2 pesos de una familia con `font-display: swap`. |
 | Sin `<meta name="description">` | Auditoría SEO de Lighthouse. | Descripción de 150–160 caracteres orientada a la búsqueda local. |
 | 2 recursos por HTTP | *Mixed content* (Best Practices 75). | Forzar HTTPS en las URL del contenido. |
@@ -118,9 +118,9 @@ Las cifras siguientes son **objetivos con su base de cálculo**, no mediciones e
 | Canales de contacto funcionales | 0 / 3 | 3 / 3 | Corregir E1–E3 es un cambio de 3 atributos `href`. Hoy el 100 % de los clics en esos enlaces fallan. |
 | CTA primario tocable en móvil | 65 × 11 px | ≥ 44 × 44 px | WCAG 2.5.8 (24 px, mínimo AA) y la guía de 44 px de Apple/Material. |
 | Violaciones axe críticas + serias | 39 nodos | 0 | Cada regla tiene una corrección de marcado directa (tabla de la sección 3). |
-| Lighthouse Accessibility | 85 | ≥ 95 | Las 4 auditorías que fallan son las mismas reglas de axe corregidas. |
-| Lighthouse Performance móvil | 32 | ≥ 75 | LCP sin `lazy` + imágenes modernas + desactivar módulos JS sin uso (ahorros estimados por el propio Lighthouse). |
-| LCP móvil | 13,3 s | ≤ 2,5 s | Umbral "bueno" de Core Web Vitals. |
+| Lighthouse Accessibility | 81 | ≥ 95 | Las 4 auditorías que fallan son las mismas reglas de axe corregidas. |
+| Lighthouse Performance móvil | 57 | ≥ 90 | LCP sin `lazy` + imágenes modernas + desactivar módulos JS sin uso (ahorros estimados por el propio Lighthouse). |
+| LCP móvil | 11,5 s | ≤ 2,5 s | Umbral "bueno" de Core Web Vitals. |
 | Lighthouse SEO | 85 | 100 | Meta description + enlaces rastreables. |
 
 **Lectura de negocio.** Los hallazgos E1–E3 no mejoran la conversión: la hacen *posible*. Es la corrección de mayor retorno del informe y se hace en menos de una hora. Las mejoras de velocidad tienen respaldo público: el estudio *Milliseconds Make Millions* (Deloitte para Google, 2020) observó que mejorar 0,1 s la velocidad móvil se asoció con hasta un +8 % de conversiones en retail. La cifra exacta para ARDO solo se puede confirmar con su analítica, por eso no se proyecta un porcentaje de conversión.
@@ -267,7 +267,7 @@ En Elementor esto se consigue sin tocar el tema: el widget de título permite el
 
 1. **Las plantillas comerciales dejan deuda invisible.** Nadie ve un `href` mal escrito hasta que un cliente no puede contactar. Un chequeo automático de enlaces (`mailto:`, `tel:`, `wa.me`) antes de publicar habría evitado los tres hallazgos críticos.
 2. **Un slider de escritorio no es un hero móvil.** Escalar un lienzo de 1920 px a 390 px convierte un botón de 16 px en uno de 4 px. El contenido que vende tiene que ser HTML real.
-3. **Medir antes de opinar.** Una sola corrida de Lighthouse varió entre 25 y 35; la mediana de tres evita conclusiones basadas en ruido.
+3. **Medir en condiciones limpias, y corregir cuando no lo fueron.** La primera versión de este informe publicó un rendimiento de 32 porque el antivirus de la máquina inyectaba un script bloqueante en cada página. Al detectarlo se bloqueó ese script, se volvió a medir (57) y se corrigieron todas las cifras. Tres corridas y su mediana protegen del ruido, pero no de un sesgo sistemático.
 
 ---
 
