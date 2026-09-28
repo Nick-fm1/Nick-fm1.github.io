@@ -8,6 +8,68 @@
 const sinMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const punteroFino = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
+// --- Día y noche -----------------------------------------------------------------
+// El tema inicial lo aplica el script del <head>; aquí solo el botón y la transición.
+/** @type {HTMLButtonElement | null} */ const botonTema = document.querySelector('#boton-tema');
+/** @type {HTMLMetaElement | null} */ const metaColor = document.querySelector('meta[name="theme-color"]');
+
+/** @param {'dia' | 'noche'} tema */
+const aplicarTema = (tema) => {
+  if (tema === 'dia') document.documentElement.setAttribute('data-tema', 'dia');
+  else document.documentElement.removeAttribute('data-tema');
+  botonTema?.setAttribute('aria-label', tema === 'dia' ? 'Activar modo noche' : 'Activar modo día');
+  metaColor?.setAttribute('content', tema === 'dia' ? '#fff6ef' : '#0b0d12');
+};
+
+aplicarTema(document.documentElement.getAttribute('data-tema') === 'dia' ? 'dia' : 'noche');
+
+botonTema?.addEventListener('click', () => {
+  const nuevo = document.documentElement.getAttribute('data-tema') === 'dia' ? 'noche' : 'dia';
+  const cambiar = () => {
+    aplicarTema(nuevo);
+    try { localStorage.setItem('ardo-tema', nuevo); } catch { /* almacenamiento bloqueado: el tema se aplica igual */ }
+  };
+
+  if (!document.startViewTransition || sinMovimiento) {
+    cambiar();
+    return;
+  }
+
+  // El tema nuevo se revela con un círculo que crece desde el botón hasta la esquina más lejana
+  const { left, top, width, height } = botonTema.getBoundingClientRect();
+  const x = left + width / 2;
+  const y = top + height / 2;
+  const radio = Math.hypot(Math.max(x, window.innerWidth - x), Math.max(y, window.innerHeight - y));
+  document.startViewTransition(cambiar).ready.then(() => {
+    document.documentElement.animate(
+      { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${radio}px at ${x}px ${y}px)`] },
+      { duration: 650, easing: 'cubic-bezier(0.2, 0.8, 0.2, 1)', pseudoElement: '::view-transition-new(root)' },
+    );
+  });
+});
+
+// --- Menú móvil ------------------------------------------------------------------
+/** @type {HTMLButtonElement | null} */ const menuBoton = document.querySelector('#menu-boton');
+/** @type {HTMLElement | null} */ const menu = document.querySelector('#menu-principal');
+
+if (menuBoton && menu) {
+  /** @param {boolean} abrir */
+  const alternar = (abrir) => {
+    menu.classList.toggle('abierto', abrir);
+    menuBoton.setAttribute('aria-expanded', String(abrir));
+    menuBoton.setAttribute('aria-label', abrir ? 'Cerrar menú' : 'Abrir menú');
+  };
+
+  menuBoton.addEventListener('click', () => alternar(!menu.classList.contains('abierto')));
+  menu.querySelectorAll('a').forEach((enlace) => enlace.addEventListener('click', () => alternar(false)));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && menu.classList.contains('abierto')) {
+      alternar(false);
+      menuBoton.focus();
+    }
+  });
+}
+
 // --- Formulario ---------------------------------------------------------------
 /** @type {HTMLFormElement | null} */ const formulario = document.querySelector('#formulario');
 /** @type {HTMLElement | null} */ const estado = document.querySelector('#form-estado');
@@ -83,7 +145,13 @@ if (!sinMovimiento && punteroFino) {
       const r = el.getBoundingClientRect();
       el.style.setProperty('--mx', `${e.clientX - r.left}px`);
       el.style.setProperty('--my', `${e.clientY - r.top}px`);
+      // Inclinación 3D: giro alrededor del eje perpendicular a la posición del cursor.
+      // Usa la propiedad rotate, así no choca con el transform de la animación de entrada.
+      const x = (e.clientX - r.left) / r.width - 0.5;
+      const y = (e.clientY - r.top) / r.height - 0.5;
+      el.style.rotate = `${-y} ${x} 0 ${Math.hypot(x, y) * 14}deg`;
     });
+    el.addEventListener('pointerleave', () => { el.style.rotate = ''; });
   });
 
   // Botones magnéticos: se desplazan unos píxeles hacia el cursor

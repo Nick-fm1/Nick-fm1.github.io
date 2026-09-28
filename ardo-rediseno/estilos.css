@@ -22,25 +22,48 @@
   src: url("../fonts/dm-mono-latin-500.woff2") format("woff2");
 }
 
+/* --------------------------------------------------------------------------
+   Tokens. Constantes de marca + dos paletas semánticas (noche y día).
+   Las bandas .invertida usan la paleta contraria a la del tema: de noche son
+   crema; de día, tinta. Así la página mantiene el ritmo en los dos temas.
+   -------------------------------------------------------------------------- */
 :root {
   --tinta: #0b0d12;
-  --panel: #16181f;
-  --panel-2: #1e212b;
-  --linea: rgba(255, 255, 255, 0.1);
-  --blanco: #ffffff;
-  --gris: #b4b8c5;          /* 9,81:1 sobre tinta */
-  --naranja: #fc4b08;       /* marca: 5,69:1 sobre tinta; sobre naranja, texto en tinta (5,69:1) */
+  --naranja: #fc4b08;       /* marca como superficie: texto encima siempre en tinta (5,69:1) */
   --naranja-2: #ff8a3d;
-  --crema: #fff6ef;
-  --gris-crema: #55596a;    /* 6,51:1 sobre crema */
-  --naranja-crema: #c2410c; /* 4,85:1 sobre crema */
-  --error: #fca5a5;
   --error-claro: #b91c1c;
   --radio: 20px;
   --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
   --sans: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --mono: "DM Mono", ui-monospace, monospace;
+}
+
+/* Paleta de noche (por defecto) */
+:root,
+:root[data-tema="dia"] .invertida {
+  --fondo: #0b0d12;
+  --superficie: #16181f;
+  --superficie-2: #1e212b;
+  --texto: #ffffff;
+  --texto-2: #b4b8c5;       /* 9,81:1 sobre el fondo */
+  --acento: #fc4b08;        /* 5,69:1 sobre el fondo */
+  --acento-inv: #c2410c;    /* acento para tarjetas de color invertido (claras) */
+  --borde: rgba(255, 255, 255, 0.1);
   color-scheme: dark;
+}
+
+/* Paleta de día */
+:root[data-tema="dia"],
+:root:not([data-tema="dia"]) .invertida {
+  --fondo: #fff6ef;
+  --superficie: #ffffff;
+  --superficie-2: #ffece0;
+  --texto: #0b0d12;
+  --texto-2: #55596a;       /* 6,51:1 sobre el fondo */
+  --acento: #c2410c;        /* 4,85:1 sobre el fondo */
+  --acento-inv: #fc4b08;    /* acento para tarjetas de color invertido (oscuras) */
+  --borde: rgba(11, 13, 18, 0.12);
+  color-scheme: light;
 }
 
 *,
@@ -61,8 +84,9 @@ html {
 
 body {
   margin: 0;
-  background: var(--tinta);
-  color: var(--blanco);
+  background: var(--fondo);
+  color: var(--texto);
+  transition: background-color 0.3s ease, color 0.3s ease;
   font-family: var(--sans);
   font-size: 1rem;
   line-height: 1.6;
@@ -80,7 +104,7 @@ p, li, blockquote {
 }
 
 a {
-  color: var(--naranja);
+  color: var(--acento);
   text-underline-offset: 3px;
 }
 
@@ -91,7 +115,7 @@ img {
 }
 
 :focus-visible {
-  outline: 3px solid var(--naranja-2);
+  outline: 3px solid var(--acento);
   outline-offset: 3px;
 }
 
@@ -214,22 +238,22 @@ main {
 }
 
 .boton-fantasma {
-  border-color: rgba(255, 255, 255, 0.28);
-  color: var(--blanco);
+  border-color: color-mix(in srgb, var(--texto) 30%, transparent);
+  color: var(--texto);
 }
 
 .boton-fantasma:hover {
-  border-color: var(--blanco);
-  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--texto);
+  background: color-mix(in srgb, var(--texto) 6%, transparent);
 }
 
 .boton-oscuro {
   background: var(--tinta);
-  color: var(--blanco);
+  color: #ffffff;
 }
 
 .boton-oscuro:hover {
-  background: var(--panel-2);
+  background: #1e212b;
 }
 
 .boton-ancho {
@@ -241,17 +265,17 @@ main {
   place-items: center;
   width: 48px;
   height: 48px;
-  border: 1.5px solid rgba(11, 13, 18, 0.3);
+  border: 1.5px solid color-mix(in srgb, var(--texto) 30%, transparent);
   border-radius: 50%;
   background: transparent;
-  color: var(--tinta);
+  color: var(--texto);
   cursor: pointer;
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .boton-circulo:hover {
-  background: var(--tinta);
-  color: var(--blanco);
+  background: var(--texto);
+  color: var(--fondo);
 }
 
 /* --------------------------------------------------------------------------
@@ -261,8 +285,9 @@ main {
   position: sticky;
   top: 0;
   z-index: 60;
-  background: rgba(11, 13, 18, 0.72);
-  border-bottom: 1px solid var(--linea);
+  background: color-mix(in srgb, var(--fondo) 74%, transparent);
+  border-bottom: 1px solid var(--borde);
+  transition: background-color 0.3s ease;
   backdrop-filter: blur(14px) saturate(1.4);
 }
 
@@ -291,7 +316,7 @@ main {
   align-items: center;
   min-height: 44px;
   padding: 0 14px;
-  color: var(--gris);
+  color: var(--texto-2);
   font-weight: 600;
   text-decoration: none;
   transition: color 0.2s ease;
@@ -309,7 +334,7 @@ main {
 }
 
 .nav-lista a:hover {
-  color: var(--blanco);
+  color: var(--texto);
 }
 
 .nav-lista a:hover::after {
@@ -347,8 +372,8 @@ main {
   inset: 0;
   z-index: -1;
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    linear-gradient(color-mix(in srgb, var(--texto) 6%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--texto) 6%, transparent) 1px, transparent 1px);
   background-size: 56px 56px;
   mask-image: radial-gradient(ellipse 70% 60% at 60% 40%, #000, transparent 75%);
 }
@@ -380,11 +405,7 @@ main {
   font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--naranja);
-}
-
-.etiqueta-oscura {
-  color: var(--naranja-crema);
+  color: var(--acento);
 }
 
 .punto {
@@ -415,7 +436,7 @@ main {
 }
 
 .acento {
-  color: var(--naranja);
+  color: var(--acento);
   font-style: italic;
   padding-right: 0.08em;
 }
@@ -423,7 +444,7 @@ main {
 .hero-texto {
   max-width: 50ch;
   margin: 0 0 32px;
-  color: var(--gris);
+  color: var(--texto-2);
   font-size: clamp(1.05rem, 1.4vw, 1.2rem);
 }
 
@@ -433,7 +454,7 @@ main {
   height: 1.6em;
   overflow: hidden;
   vertical-align: bottom;
-  color: var(--blanco);
+  color: var(--texto);
   font-weight: 800;
 }
 
@@ -456,12 +477,12 @@ main {
 
 .hero-prueba {
   margin: 0;
-  color: var(--gris);
+  color: var(--texto-2);
   font-size: 0.925rem;
 }
 
 .hero-prueba strong {
-  color: var(--blanco);
+  color: var(--texto);
   font-size: 1.1rem;
 }
 
@@ -497,7 +518,7 @@ main {
 }
 
 .flecha {
-  stroke: var(--blanco);
+  stroke: var(--texto);
   stroke-width: 7;
   stroke-linecap: round;
   fill: none;
@@ -514,19 +535,19 @@ main {
 .chip {
   position: absolute;
   padding: 10px 14px;
-  border: 1px solid var(--linea);
+  border: 1px solid var(--borde);
   border-radius: 14px;
-  background: rgba(22, 24, 31, 0.86);
+  background: color-mix(in srgb, var(--superficie) 88%, transparent);
   backdrop-filter: blur(8px);
-  color: var(--gris);
+  color: var(--texto-2);
   font-size: 0.85rem;
   white-space: nowrap;
-  box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.8);
+  box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.5);
 }
 
 .chip b {
   margin-left: 6px;
-  color: var(--naranja);
+  color: var(--acento);
   font-family: var(--mono);
 }
 
@@ -592,14 +613,13 @@ main {
 
 .seccion-intro {
   margin: 16px 0 0;
-  color: var(--gris-crema);
+  color: var(--texto-2);
   font-size: 1.1rem;
 }
 
-.seccion-clara,
-.contacto {
-  background: var(--crema);
-  color: var(--tinta);
+.invertida {
+  background: var(--fondo);
+  color: var(--texto);
 }
 
 /* Bento de servicios */
@@ -620,11 +640,11 @@ main {
   min-height: 260px;
   padding: 28px;
   overflow: hidden;
-  border: 1px solid var(--linea);
+  border: 1px solid var(--borde);
   border-radius: var(--radio);
-  background: var(--panel);
+  background: var(--superficie);
   isolation: isolate;
-  transition: border-color 0.3s ease, translate 0.4s var(--ease);
+  transition: border-color 0.3s ease, translate 0.4s var(--ease), rotate 0.4s var(--ease);
 }
 
 /* Foco que sigue al cursor (demo.js actualiza --mx y --my) */
@@ -649,7 +669,7 @@ main {
 
 .tarjeta-grande {
   grid-row: span 2;
-  background: linear-gradient(160deg, var(--panel-2), var(--panel) 60%);
+  background: linear-gradient(160deg, var(--superficie-2), var(--superficie) 60%);
 }
 
 .tarjeta-ancha {
@@ -659,7 +679,7 @@ main {
 .tarjeta-num {
   font-family: var(--mono);
   font-size: 0.85rem;
-  color: var(--naranja);
+  color: var(--acento);
 }
 
 .tarjeta-icono {
@@ -668,7 +688,7 @@ main {
   padding: 10px;
   border-radius: 12px;
   background: rgba(252, 75, 8, 0.14);
-  color: var(--naranja);
+  color: var(--acento);
   transition: rotate 0.4s var(--ease), scale 0.4s var(--ease);
 }
 
@@ -688,7 +708,7 @@ main {
 
 .tarjeta p {
   margin: 0;
-  color: var(--gris);
+  color: var(--texto-2);
 }
 
 /* Cifras */
@@ -716,7 +736,7 @@ main {
   margin: 18px 0 16px;
   overflow: hidden;
   border-radius: 999px;
-  background: rgba(11, 13, 18, 0.12);
+  background: color-mix(in srgb, var(--texto) 12%, transparent);
 }
 
 .barra-relleno {
@@ -737,7 +757,7 @@ main {
 
 .cifra p {
   margin: 0;
-  color: var(--gris-crema);
+  color: var(--texto-2);
 }
 
 /* Testimonios: carrusel con scroll-snap nativo */
@@ -769,6 +789,9 @@ main {
   overflow-x: auto;
   list-style: none;
   scroll-snap-type: x mandatory;
+  /* El punto de anclaje debe coincidir con el padding: si no, al cargar el navegador reajusta el
+     carrusel 4 px con scroll suave, Chrome lo cuenta como desplazamiento y deja de medir el LCP (medido). */
+  scroll-padding-inline: 4px;
   scroll-behavior: smooth;
   scrollbar-width: thin;
 }
@@ -780,9 +803,10 @@ main {
   gap: 24px;
   padding: 32px;
   border-radius: var(--radio);
-  background: var(--tinta);
-  color: var(--blanco);
+  background: var(--texto); /* tarjeta en la paleta contraria a la de su banda */
+  color: var(--fondo);
   scroll-snap-align: start;
+  transition: translate 0.35s var(--ease);
 }
 
 .testimonio blockquote {
@@ -801,7 +825,7 @@ main {
   display: block;
   height: 0.6em;
   margin-bottom: 12px;
-  color: var(--naranja);
+  color: var(--acento-inv);
   font-size: 4rem;
   line-height: 1;
 }
@@ -812,7 +836,11 @@ main {
   font-size: 0.85rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--naranja);
+  color: var(--acento-inv);
+}
+
+.testimonio:hover {
+  translate: 0 -6px;
 }
 
 /* Proceso: título fijo mientras los pasos avanzan */
@@ -832,7 +860,7 @@ main {
   margin: 0;
   padding: 0;
   list-style: none;
-  border-left: 2px solid var(--linea);
+  border-left: 2px solid var(--borde);
 }
 
 .paso {
@@ -853,7 +881,7 @@ main {
   height: 16px;
   border: 3px solid var(--naranja);
   border-radius: 50%;
-  background: var(--tinta);
+  background: var(--fondo);
 }
 
 .paso-num {
@@ -861,7 +889,7 @@ main {
   margin-bottom: 8px;
   font-family: var(--mono);
   font-size: 0.9rem;
-  color: var(--naranja);
+  color: var(--acento);
 }
 
 .paso h3 {
@@ -872,7 +900,7 @@ main {
 .paso p {
   margin: 0;
   max-width: 46ch;
-  color: var(--gris);
+  color: var(--texto-2);
   font-size: 1.05rem;
 }
 
@@ -880,7 +908,7 @@ main {
    Contacto y formulario (fondo crema)
    -------------------------------------------------------------------------- */
 .contacto a {
-  color: var(--naranja-crema);
+  color: var(--acento);
 }
 
 .contacto-rejilla {
@@ -902,7 +930,7 @@ main {
 
 .canales li {
   padding: 12px 0;
-  border-bottom: 1px solid rgba(11, 13, 18, 0.14);
+  border-bottom: 1px solid var(--borde);
 }
 
 .canal-etiqueta {
@@ -911,9 +939,13 @@ main {
   font-weight: 800;
 }
 
-.ejemplo,
+.ejemplo {
+  color: var(--texto-2);
+  font-size: 0.875rem;
+}
+
 .opcional {
-  color: var(--gris-crema);
+  color: #55596a;
   font-size: 0.875rem;
   font-weight: 400;
 }
@@ -933,13 +965,22 @@ main {
 .formulario {
   padding: clamp(24px, 4vw, 40px);
   border-radius: 28px;
-  background: var(--blanco);
+  background: #ffffff;
+  color: var(--tinta); /* tarjeta siempre clara, en cualquier tema y banda */
   box-shadow: 0 30px 80px -40px rgba(11, 13, 18, 0.45);
+}
+
+.formulario a {
+  color: #c2410c;
+}
+
+.formulario :focus-visible {
+  outline-color: #c2410c;
 }
 
 .form-nota {
   margin: 0 0 18px;
-  color: var(--gris-crema);
+  color: #55596a;
   font-size: 0.875rem;
 }
 
@@ -960,7 +1001,7 @@ main {
   padding: 12px 16px;
   border: 1.5px solid #64748b; /* 4,76:1 sobre blanco: el límite del campo es visible (WCAG 1.4.11) */
   border-radius: 12px;
-  background: var(--blanco);
+  background: #ffffff;
   color: var(--tinta);
   font: inherit;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
@@ -985,8 +1026,8 @@ main {
 }
 
 .campo-casilla input {
-  width: 24px;
-  height: 24px;
+  width: 26px;
+  height: 26px;
   margin: 2px 0 0;
   accent-color: var(--tinta);
 }
@@ -1015,14 +1056,14 @@ main {
 
 .privacidad {
   padding-block: 40px;
-  background: var(--panel);
-  color: var(--gris);
+  background: var(--superficie);
+  color: var(--texto-2);
   font-size: 0.925rem;
 }
 
 .privacidad h2 {
   margin-bottom: 8px;
-  color: var(--blanco);
+  color: var(--texto);
   font-size: 1.2rem;
 }
 
@@ -1034,8 +1075,8 @@ main {
 /* Pie */
 .pie {
   padding-block: 40px;
-  border-top: 1px solid var(--linea);
-  color: var(--gris);
+  border-top: 1px solid var(--borde);
+  color: var(--texto-2);
   font-size: 0.9rem;
 }
 
@@ -1058,8 +1099,291 @@ main {
 }
 
 /* --------------------------------------------------------------------------
+   Día y noche
+   -------------------------------------------------------------------------- */
+
+/* Logo según el tema: blanco de noche, naranja de día */
+.marca .logo-dia,
+:root[data-tema="dia"] .marca .logo-noche {
+  display: none;
+}
+
+:root[data-tema="dia"] .marca .logo-dia {
+  display: block;
+}
+
+.cabecera-controles {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.cabecera-cta {
+  margin-left: 8px;
+}
+
+/* Botón sol/luna: la luna es el sol tapado por un círculo que se desliza */
+.boton-tema,
+.menu-boton {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--borde);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--texto);
+  cursor: pointer;
+  transition: background-color 0.2s ease, rotate 0.5s var(--ease);
+}
+
+.boton-tema:hover,
+.menu-boton:hover {
+  background: color-mix(in srgb, var(--texto) 8%, transparent);
+}
+
+.boton-tema:active {
+  rotate: 30deg;
+}
+
+.tema-icono {
+  overflow: visible;
+}
+
+.tema-rayos {
+  transform-origin: 12px 12px;
+  transition: transform 0.5s var(--ease), opacity 0.3s ease;
+  transform: scale(0.4) rotate(-45deg);
+  opacity: 0;
+}
+
+.tema-mascara {
+  transition: transform 0.5s var(--ease);
+}
+
+.tema-nucleo {
+  transform-origin: 12px 12px;
+  transition: transform 0.5s var(--ease);
+}
+
+/* De día se ve el sol: rayos visibles y la máscara fuera del círculo */
+:root[data-tema="dia"] .tema-rayos {
+  transform: scale(1) rotate(0deg);
+  opacity: 1;
+}
+
+:root[data-tema="dia"] .tema-mascara {
+  transform: translate(8px, -8px);
+}
+
+:root[data-tema="dia"] .tema-nucleo {
+  transform: scale(0.72);
+}
+
+/* Cielo del hero: estrellas de noche, sol de día */
+.hero-cielo,
+.hero-sol {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  transition: opacity 0.6s ease;
+}
+
+.hero-cielo::before,
+.hero-cielo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-repeat: repeat;
+}
+
+.hero-cielo::before {
+  background-image:
+    radial-gradient(1.5px 1.5px at 20px 30px, #fff, transparent),
+    radial-gradient(1px 1px at 90px 120px, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 160px 60px, #ffd7c2, transparent),
+    radial-gradient(1px 1px at 230px 170px, #fff, transparent);
+  background-size: 260px 220px;
+  opacity: 0.55;
+}
+
+.hero-cielo::after {
+  background-image:
+    radial-gradient(2px 2px at 50px 80px, #fff, transparent),
+    radial-gradient(1px 1px at 140px 20px, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 200px 140px, #fff, transparent);
+  background-size: 310px 260px;
+  opacity: 0.3;
+}
+
+.hero-sol {
+  opacity: 0;
+}
+
+/* Disco con rayos girando detrás de la diana */
+.hero-sol::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 4%;
+  width: min(62vw, 720px);
+  aspect-ratio: 1;
+  translate: 0 -50%;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(255, 176, 102, 0.55) 0%, rgba(255, 138, 61, 0.22) 32%, transparent 62%),
+    repeating-conic-gradient(from 0deg, rgba(252, 75, 8, 0.1) 0deg 6deg, transparent 6deg 18deg);
+  mask-image: radial-gradient(circle, #000 30%, transparent 70%);
+}
+
+:root[data-tema="dia"] .hero-cielo {
+  opacity: 0;
+}
+
+:root[data-tema="dia"] .hero-sol {
+  opacity: 1;
+}
+
+:root[data-tema="dia"] .hero-grano {
+  opacity: 0.05;
+}
+
+/* Transición de tema: el JS revela el tema nuevo con un círculo desde el botón */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-new(root) {
+  z-index: 1;
+}
+
+/* --------------------------------------------------------------------------
+   Efectos
+   -------------------------------------------------------------------------- */
+
+/* Ondas de sonar que salen de la diana cada pocos segundos */
+.sonar {
+  fill: none;
+  stroke: var(--naranja);
+  stroke-width: 2;
+  opacity: 0;
+  transform-origin: 200px 200px;
+}
+
+/* Inclinación 3D de las tarjetas (demo.js ajusta la propiedad rotate) */
+.bento {
+  perspective: 1100px;
+}
+
+/* Destello que cruza el botón principal */
+.boton-marca {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.boton-marca::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(105deg, transparent 30%, rgba(255, 255, 255, 0.55) 50%, transparent 70%);
+  translate: -120% 0;
+  transition: translate 0.7s var(--ease);
+}
+
+.boton-marca:hover::after {
+  translate: 120% 0;
+}
+
+/* --------------------------------------------------------------------------
+   Menú móvil
+   -------------------------------------------------------------------------- */
+.menu-boton {
+  display: none;
+}
+
+.menu-linea {
+  display: block;
+  width: 18px;
+  height: 2px;
+  margin: 2px 0;
+  border-radius: 2px;
+  background: currentColor;
+  transition: transform 0.3s var(--ease), opacity 0.2s ease;
+}
+
+.menu-boton[aria-expanded="true"] .menu-linea:first-child {
+  transform: translateY(4px) rotate(45deg);
+}
+
+.menu-boton[aria-expanded="true"] .menu-linea:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-boton[aria-expanded="true"] .menu-linea:last-child {
+  transform: translateY(-4px) rotate(-45deg);
+}
+
+.menu-lineas {
+  display: flex;
+  flex-direction: column;
+}
+
+/* --------------------------------------------------------------------------
    Responsive
    -------------------------------------------------------------------------- */
+@media (max-width: 960px) {
+  .menu-boton {
+    display: grid;
+  }
+
+  /* El menú se despliega bajo la cabecera */
+  .cabecera nav {
+    position: absolute;
+    inset: 100% 0 auto;
+    display: none;
+    padding: 12px 20px 20px;
+    background: var(--fondo);
+    border-bottom: 1px solid var(--borde);
+    box-shadow: 0 24px 40px -24px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    translate: 0 -8px;
+    transition: opacity 0.25s ease, translate 0.25s var(--ease), display 0.25s allow-discrete;
+  }
+
+  .cabecera nav.abierto {
+    display: block;
+    opacity: 1;
+    translate: 0 0;
+  }
+
+  @starting-style {
+    .cabecera nav.abierto {
+      opacity: 0;
+      translate: 0 -8px;
+    }
+  }
+
+  .cabecera nav .nav-lista {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cabecera nav .nav-lista a {
+    min-height: 52px;
+    font-size: 1.15rem;
+  }
+
+  html:has(.cabecera nav.abierto) {
+    overflow: hidden;
+  }
+}
 @media (max-width: 960px) {
   .nav-lista {
     display: none;
@@ -1129,9 +1453,9 @@ main {
     inset: auto 0 0 0;
     z-index: 65;
     padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
-    background: rgba(11, 13, 18, 0.9);
+    background: color-mix(in srgb, var(--fondo) 90%, transparent);
     backdrop-filter: blur(12px);
-    border-top: 1px solid var(--linea);
+    border-top: 1px solid var(--borde);
   }
 
   .pie {
@@ -1256,6 +1580,43 @@ main {
     to { transform: translateX(-50%); }
   }
 
+  /* Noche: dos capas de estrellas que titilan desfasadas */
+  .hero-cielo::before {
+    animation: titilar 4s ease-in-out infinite alternate;
+  }
+
+  .hero-cielo::after {
+    animation: titilar 5.5s ease-in-out 1.2s infinite alternate-reverse;
+  }
+
+  @keyframes titilar {
+    from { opacity: 0.15; }
+    to { opacity: 0.7; }
+  }
+
+  /* Día: los rayos del sol giran lentamente */
+  .hero-sol::before {
+    animation: girar-sol 60s linear infinite;
+  }
+
+  @keyframes girar-sol {
+    to { rotate: 360deg; }
+  }
+
+  /* Ondas de sonar periódicas desde el centro de la diana */
+  .sonar {
+    animation: sonar 4.5s ease-out 2.2s infinite;
+  }
+
+  .sonar.s2 {
+    animation-delay: 4.45s;
+  }
+
+  @keyframes sonar {
+    0% { opacity: 0.7; transform: scale(1); }
+    60%, 100% { opacity: 0; transform: scale(5.2); }
+  }
+
   /* Animaciones ligadas al scroll */
   @supports (animation-timeline: view()) {
     .progreso {
@@ -1268,6 +1629,36 @@ main {
 
     @keyframes progreso {
       to { transform: scaleX(1); }
+    }
+
+    /* Parallax: la diana baja más despacio que el scroll (translate no choca con la inclinación, que usa transform) */
+    .diana {
+      animation: parallax linear both;
+    }
+
+    .hero .diana {
+      animation-timeline: scroll(root block);
+      animation-range: 0 100vh;
+    }
+
+    @keyframes parallax {
+      to { translate: 0 120px; }
+    }
+
+    /* Los títulos de sección se revelan de abajo arriba al entrar en pantalla */
+    .seccion h2,
+    .testimonios-cabeza h3 {
+      animation: revelar linear both;
+    }
+
+    main .seccion :is(h2, .testimonios-cabeza h3) {
+      animation-timeline: view();
+      animation-range: entry 10% entry 90%;
+    }
+
+    @keyframes revelar {
+      from { clip-path: inset(0 0 100% 0); translate: 0 30px; }
+      to { clip-path: inset(0 0 -10% 0); }
     }
 
     .tarjeta,

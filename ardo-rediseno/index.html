@@ -2,13 +2,24 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'none'; object-src 'none'; base-uri 'self'; upgrade-insecure-requests">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-ofYRs+lhoPY6+/gxa3og5UN9K8P+MhVLA2vUZOm6WMU='; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'none'; object-src 'none'; base-uri 'self'; upgrade-insecure-requests">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Concepto de portafolio: no debe aparecer en buscadores como si fuera el sitio de la agencia -->
   <meta name="robots" content="noindex, nofollow">
   <meta name="description" content="Concepto de rediseño independiente de la home de ARDO Marketing, creado por Sebastián Moreno como caso de estudio de conversión, móvil y accesibilidad. No es el sitio oficial.">
   <meta name="theme-color" content="#0b0d12">
-  <meta name="color-scheme" content="dark">
+  <meta name="color-scheme" content="dark light">
+  <!-- Tema antes del primer pintado. Si se cambia este script, hay que recalcular su hash en la CSP (validar.js lo comprueba) -->
+  <script>
+    (function () {
+      var tema;
+      try { tema = localStorage.getItem('ardo-tema'); } catch (e) { tema = null; }
+      if (tema !== 'dia' && tema !== 'noche') {
+        tema = window.matchMedia('(prefers-color-scheme: light)').matches ? 'dia' : 'noche';
+      }
+      if (tema === 'dia') document.documentElement.setAttribute('data-tema', 'dia');
+    })();
+  </script>
   <title>Concepto de rediseño · ARDO Marketing — caso de estudio</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23fc4b08'/%3E%3Ccircle cx='16' cy='16' r='9' fill='none' stroke='%230b0d12' stroke-width='3'/%3E%3Ccircle cx='16' cy='16' r='3' fill='%230b0d12'/%3E%3C/svg%3E">
   <link rel="preload" href="../fonts/plus-jakarta-sans-latin-var.woff2" as="font" type="font/woff2" crossorigin>
@@ -28,10 +39,11 @@
 
   <header class="cabecera">
     <div class="contenedor cabecera-fila">
-      <a class="marca" href="#inicio">
-        <img src="img/logo-blanco.webp" width="120" height="44" alt="ARDO Marketing, ir al inicio">
+      <a class="marca" href="#inicio" aria-label="ARDO Marketing, ir al inicio">
+        <img class="logo-noche" src="img/logo-blanco.webp" width="120" height="44" alt="">
+        <img class="logo-dia" src="img/logo-naranja.webp" width="120" height="44" alt="" loading="lazy">
       </a>
-      <nav aria-label="Principal">
+      <nav id="menu-principal" aria-label="Principal">
         <ul class="nav-lista">
           <li><a href="#servicios">Servicios</a></li>
           <li><a href="#resultados">Resultados</a></li>
@@ -39,13 +51,32 @@
           <li><a href="#contacto">Contacto</a></li>
         </ul>
       </nav>
-      <a class="boton boton-marca boton-sm cabecera-cta magnetico" href="#contacto">Trabajemos juntos</a>
+      <div class="cabecera-controles">
+        <button class="boton-tema" id="boton-tema" type="button" aria-label="Activar modo día">
+          <svg class="tema-icono" aria-hidden="true" width="22" height="22" viewBox="0 0 24 24">
+            <mask id="tema-mascara">
+              <rect width="24" height="24" fill="#fff"/>
+              <circle class="tema-mascara" cx="17" cy="7" r="6" fill="#000"/>
+            </mask>
+            <circle class="tema-nucleo" cx="12" cy="12" r="7" fill="currentColor" mask="url(#tema-mascara)"/>
+            <g class="tema-rayos" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path d="M12 1.5v2.2M12 20.3v2.2M1.5 12h2.2M20.3 12h2.2M4.6 4.6l1.5 1.5M17.9 17.9l1.5 1.5M4.6 19.4l1.5-1.5M17.9 6.1l1.5-1.5"/>
+            </g>
+          </svg>
+        </button>
+        <button class="menu-boton" id="menu-boton" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu-principal">
+          <span class="menu-lineas" aria-hidden="true"><span class="menu-linea"></span><span class="menu-linea"></span><span class="menu-linea"></span></span>
+        </button>
+        <a class="boton boton-marca boton-sm cabecera-cta magnetico" href="#contacto">Trabajemos juntos</a>
+      </div>
     </div>
   </header>
 
   <main id="contenido">
     <!-- HERO: HTML real (antes: slider de escritorio escalado con un CTA de 65 × 11 px) -->
     <section class="hero" id="inicio" aria-labelledby="hero-titulo">
+      <div class="hero-cielo" aria-hidden="true"></div>
+      <div class="hero-sol" aria-hidden="true"></div>
       <div class="hero-grano" aria-hidden="true"></div>
       <div class="contenedor hero-rejilla">
         <div class="hero-copia">
@@ -81,6 +112,8 @@
               <path d="M360 40 l-6 34 m6-34 l-34 6 M338 22 l22 18 M378 62 l-18-22"/>
             </g>
             <circle class="impacto" cx="200" cy="200" r="38"/>
+            <circle class="sonar s1" cx="200" cy="200" r="38"/>
+            <circle class="sonar s2" cx="200" cy="200" r="38"/>
           </svg>
           <div class="chip chip-1">Reconocimiento <b>80%</b></div>
           <div class="chip chip-2">Ventas <b>70%</b></div>
@@ -134,10 +167,10 @@
     </section>
 
     <!-- RESULTADOS: cifras que publica la agencia, con contador y barra -->
-    <section class="seccion seccion-clara" id="resultados" aria-labelledby="resultados-titulo">
+    <section class="seccion invertida" id="resultados" aria-labelledby="resultados-titulo">
       <div class="contenedor">
         <div class="seccion-cabeza">
-          <p class="etiqueta etiqueta-oscura">Resultados</p>
+          <p class="etiqueta">Resultados</p>
           <h2 id="resultados-titulo">Lo que han logrado nuestros clientes.</h2>
           <p class="seccion-intro">Acompañamos a cada empresa como un aliado estratégico. Cifras publicadas por la agencia.</p>
         </div>
@@ -224,10 +257,10 @@
     </section>
 
     <!-- CONTACTO: formulario accesible, consentimiento SIN premarcar y enlace a la política -->
-    <section class="seccion contacto" id="contacto" aria-labelledby="contacto-titulo">
+    <section class="seccion contacto invertida" id="contacto" aria-labelledby="contacto-titulo">
       <div class="contenedor contacto-rejilla">
         <div>
-          <p class="etiqueta etiqueta-oscura">Contacto</p>
+          <p class="etiqueta">Contacto</p>
           <h2 id="contacto-titulo">Contacta a un equipo completo que se convierte en parte de tu marca.</h2>
           <p>Te respondemos en menos de un día hábil con una propuesta de diagnóstico.</p>
           <ul class="canales">
