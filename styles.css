@@ -86,8 +86,14 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 96px; /* las anclas no quedan tapadas por el header fijo de 78px */
   color-scheme: light dark;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
+[data-theme="light"] { color-scheme: light; }
+[data-theme="dark"] { color-scheme: dark; }
 
 body {
   margin: 0;
@@ -97,6 +103,28 @@ body {
   font-size: 1rem;
   line-height: 1.6;
   transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Tipografía: titulares equilibrados y párrafos sin viudas */
+h1, h2, h3, h4 {
+  text-wrap: balance;
+}
+
+p, li, dd, figcaption {
+  text-wrap: pretty;
+}
+
+/* Cifras que se comparan entre sí: ancho fijo por dígito */
+.kpi-value,
+.score-num,
+.results-table td,
+.step-num {
+  font-variant-numeric: tabular-nums;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--orange) 28%, transparent);
+  color: var(--ink);
 }
 
 a {
@@ -276,6 +304,7 @@ pre code {
   font-family: var(--mono);
   font-size: 0.75rem;
   margin-bottom: 24px;
+  text-wrap: balance;
 }
 
 .status-dot {
@@ -344,6 +373,12 @@ pre code {
 
 .button:hover {
   transform: translateY(-2px);
+}
+
+/* Respuesta táctil al pulsar */
+.button:active {
+  transform: translateY(0) scale(0.97);
+  transition-duration: 0.08s;
 }
 
 .button:disabled {
@@ -1500,10 +1535,6 @@ p.compare-criteria {
     grid-row: auto;
   }
 
-  .compare-pair--code {
-    grid-template-columns: 1fr;
-  }
-
   .case-footer {
     flex-direction: column;
     align-items: flex-start;
@@ -1546,10 +1577,29 @@ p.compare-criteria {
     padding: 20px;
     border-bottom: 1px solid var(--line);
     box-shadow: var(--shadow);
+    opacity: 0;
+    translate: 0 -8px;
+    /* allow-discrete: display participa en la transición, así el menú también se anima al cerrarse */
+    transition: opacity 0.2s ease, translate 0.2s ease, display 0.2s allow-discrete;
   }
 
   .nav-links.is-open {
     display: flex;
+    opacity: 1;
+    translate: 0 0;
+  }
+
+  /* Punto de partida de la animación de entrada (desde display: none) */
+  @starting-style {
+    .nav-links.is-open {
+      opacity: 0;
+      translate: 0 -8px;
+    }
+  }
+
+  /* Con el menú abierto, la página de fondo no se desplaza */
+  html:has(.nav-links.is-open) {
+    overflow: hidden;
   }
 }
 
@@ -1608,6 +1658,162 @@ p.compare-criteria {
   }
 }
 
+/* ==========================================================================
+   12. CSS MODERNO — MEJORA PROGRESIVA
+   Cada técnica tiene respaldo: sin soporte, la página se ve y funciona igual que antes.
+   El movimiento solo se activa con prefers-reduced-motion: no-preference.
+   ========================================================================== */
+
+/* --- Par de código: se apila solo cuando no caben dos bloques de 300px (sin media queries) */
+.compare-pair--code {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.compare-pair--code > .code-card {
+  flex: 1 1 300px;
+}
+
+/* Nota medida (2026-09-27): una container query en las tarjetas KPI (container-type + cqi) subía el FCP
+   de 1,5 s a 2,0 s en Lighthouse móvil. Se retiró: el clamp() por viewport de .kpi-value no desborda. */
+
+/* --- Textura de papel milimetrado en el hero: tono de informe técnico */
+.hero {
+  position: relative;
+  isolation: isolate;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -80px 0 0; /* dentro del ancho del contenedor: nada desborda en horizontal */
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--ink) 7%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--ink) 7%, transparent) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-position: center top;
+  mask-image: radial-gradient(ellipse 55% 70% at 50% 35%, #000 20%, transparent 72%);
+  pointer-events: none;
+}
+
+/* --- Borde degradado de la tarjeta insignia con @property (el ángulo se puede animar) */
+@property --giro {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 135deg;
+}
+
+.project-featured {
+  border-color: transparent;
+  background:
+    linear-gradient(var(--card-bg), var(--card-bg)) padding-box,
+    conic-gradient(from var(--giro), var(--line) 0deg, var(--orange) 70deg, var(--green) 150deg, var(--line) 230deg, var(--line) 360deg) border-box;
+}
+
+/* --- Header: sombra cuando el contenido pasa por debajo; barra de progreso de lectura */
+.scroll-progress {
+  position: absolute;
+  inset: auto 0 -1px 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--green), var(--orange));
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  pointer-events: none;
+}
+
+/* --- Transición de tema (View Transitions API): el JS dibuja un círculo que crece desde el botón */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-new(root) {
+  z-index: 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .project-featured:hover {
+    animation: girar-borde 6s linear infinite;
+  }
+
+  @keyframes girar-borde {
+    to { --giro: 495deg; }
+  }
+
+  /* Animaciones ligadas al scroll: el navegador las calcula fuera del hilo principal, sin JS.
+     animation-timeline y animation-range van SIEMPRE en una regla aparte, con un selector más específico
+     que el del shorthand: si comparten regla, el minificador los fusiona en `animation: … view()`, que Chrome
+     no admite (en el shorthand, la línea de tiempo es de solo reinicio) y la animación se descarta. */
+  @supports (animation-timeline: scroll()) {
+    .scroll-progress {
+      animation: progreso-lectura linear both;
+    }
+
+    .site-header > .scroll-progress {
+      animation-timeline: scroll(root block);
+    }
+
+    @keyframes progreso-lectura {
+      to { transform: scaleX(1); }
+    }
+
+    .site-header {
+      animation: header-elevado linear both;
+    }
+
+    body > .site-header {
+      animation-timeline: scroll(root block);
+      animation-range: 0 120px;
+    }
+
+    @keyframes header-elevado {
+      to { box-shadow: 0 8px 24px -12px rgba(15, 23, 42, 0.25); }
+    }
+  }
+
+  @supports (animation-timeline: view()) {
+    /* Aparición al entrar en pantalla: solo opacidad y desplazamiento (propiedades del compositor) */
+    .project,
+    .kpi,
+    .star-card,
+    .compare,
+    .step-card,
+    .results,
+    .case-footer,
+    .contact-card {
+      animation: aparecer linear both;
+    }
+
+    :is(main, footer) :is(.project, .kpi, .star-card, .compare, .step-card, .results, .case-footer, .contact-card) {
+      animation-timeline: view();
+      animation-range: entry 0% entry 60%;
+    }
+
+    @keyframes aparecer {
+      from {
+        opacity: 0;
+        translate: 0 24px;
+      }
+    }
+
+    /* Los anillos del scorecard se "cargan" hasta su puntuación al entrar en pantalla */
+    .score-value {
+      animation: cargar-anillo linear both;
+    }
+
+    .score-ring .score-value {
+      animation-timeline: view();
+      animation-range: entry 30% cover 45%;
+    }
+
+    @keyframes cargar-anillo {
+      from { stroke-dasharray: 0 100; }
+    }
+  }
+}
+
 /* Respeta la preferencia de movimiento reducido del sistema (WCAG 2.3.3) */
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -1625,4 +1831,3 @@ p.compare-criteria {
   .button:hover {
     transform: none;
   }
-}

@@ -29,6 +29,8 @@ Auditoría del sitio en producción de una agencia de marketing: **embudo de con
 ## 💡 Enfoque y criterio técnico
 
 * **Núcleo sin frameworks:** HTML5 semántico, CSS3 moderno (Custom Properties, Grid, `clamp()`, `color-mix()`) y JavaScript Vanilla. Sin build ni dependencias en tiempo de carga.
+* **CSS moderno como mejora progresiva:** View Transitions para el cambio de tema, animaciones ligadas al scroll (`animation-timeline`) sin JavaScript, `@starting-style` para el menú móvil, `@property`, `:has()` y `text-wrap`. Todo respeta `prefers-reduced-motion`, y sin soporte la página funciona igual.
+* **CSS minificado con Lightning CSS:** `styles.css` es la fuente legible; se publica `styles.min.css` (6 KB con gzip).
 * **Fuentes autoalojadas:** tres archivos woff2 (57 KB) servidos desde el propio dominio, con la fuente del titular precargada. Se elimina la cadena de peticiones a Google Fonts que bloqueaba el primer pintado.
 * **3D bajo demanda:** el visor `<model-viewer>` (≈ 250 KB de JS + modelo de 2,9 MB) solo se descarga cuando el visitante pulsa "Activar vista 3D". Respeta `prefers-reduced-motion` (sin rotación automática) y mueve el foco del teclado al visor al cargarlo.
 * **Tema claro/oscuro sin destello:** el tema se aplica con un script mínimo en el `<head>` antes del primer pintado; la elección se guarda en `localStorage` con respaldo si el almacenamiento está bloqueado.

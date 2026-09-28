@@ -71,7 +71,7 @@
   <!-- Fuente del titular (elemento LCP) precargada; las fuentes se sirven desde el propio dominio -->
   <link rel="preload" href="fonts/plus-jakarta-sans-latin-var.woff2" as="font" type="font/woff2" crossorigin>
 
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.min.css">
 </head>
 <body>
   <!-- Salto de navegación para accesibilidad -->
@@ -79,6 +79,7 @@
 
   <!-- Encabezado de Navegación -->
   <header class="site-header" id="site-header">
+    <div class="scroll-progress" aria-hidden="true"></div>
     <nav class="nav container" aria-label="Navegación principal">
       <a class="brand" href="#inicio" aria-label="Inicio de Sebastián Moreno">
         SM<span class="brand-dot" aria-hidden="true">.</span>

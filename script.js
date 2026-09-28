@@ -159,11 +159,32 @@ aplicarTema(document.documentElement.getAttribute('data-theme') === 'dark' ? 'da
 
 themeToggle?.addEventListener('click', () => {
   const newTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-  aplicarTema(newTheme);
+  const cambiar = () => {
+    aplicarTema(newTheme);
+    try {
+      localStorage.setItem('theme', newTheme);
+    } catch {
+      // Navegación privada o almacenamiento bloqueado: el tema se aplica igual durante la visita.
+    }
+  };
 
-  try {
-    localStorage.setItem('theme', newTheme);
-  } catch {
-    // Navegación privada o almacenamiento bloqueado: el tema se aplica igual durante la visita.
+  // Sin soporte de View Transitions o con movimiento reducido: cambio inmediato
+  if (!document.startViewTransition || prefiereMenosMovimiento.matches) {
+    cambiar();
+    return;
   }
+
+  // El nuevo tema se revela con un círculo que crece desde el botón hasta la esquina más lejana
+  const { left, top, width, height } = themeToggle.getBoundingClientRect();
+  const x = left + width / 2;
+  const y = top + height / 2;
+  const radio = Math.hypot(Math.max(x, window.innerWidth - x), Math.max(y, window.innerHeight - y));
+
+  const transicion = document.startViewTransition(cambiar);
+  transicion.ready.then(() => {
+    document.documentElement.animate(
+      { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${radio}px at ${x}px ${y}px)`] },
+      { duration: 480, easing: 'cubic-bezier(0.2, 0.8, 0.2, 1)', pseudoElement: '::view-transition-new(root)' },
+    );
+  });
 });
