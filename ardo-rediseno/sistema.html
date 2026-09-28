@@ -32,6 +32,7 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23fc4b08'/%3E%3Ccircle cx='16' cy='16' r='9' fill='none' stroke='%230b0d12' stroke-width='3'/%3E%3Ccircle cx='16' cy='16' r='3' fill='%230b0d12'/%3E%3C/svg%3E">
   <link rel="preload" href="../fonts/plus-jakarta-sans-latin-var.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="estilos.min.css">
+  <link rel="stylesheet" href="sistema.min.css">
 </head>
 <body class="pagina-sistema">
   <a class="skip-link" href="#contenido">Saltar al contenido</a>
@@ -71,7 +72,7 @@
         <ol class="principios">
           <li><h2>60 · 30 · 10</h2><p>60 % fondo neutro, 30 % superficies y texto, 10 % naranja solo en acciones y datos clave. Medido: el naranja saturado ocupa menos del 1 % de la página, concentrado en los botones.</p></li>
           <li><h2>Contraste verificado</h2><p>Todo el texto cumple WCAG 2.2 AA (4,5 : 1) en modo día y noche. axe-core: 0 violaciones a 390 y 320 px en ambos temas.</p></li>
-          <li><h2>Movimiento con propósito</h2><p>Lo que se anima guía la lectura y ocurre una vez. En bucle solo quedan 3–4 efectos lentos, y nada se mueve si el sistema pide reducir el movimiento.</p></li>
+          <li><h2>Movimiento con propósito</h2><p>Lo que se anima guía la lectura y ocurre una vez. En bucle solo quedan 3 efectos lentos: el carril de clientes, la palabra que rota y el cielo del tema visible. Nada se mueve si la persona pide reducir el movimiento.</p></li>
         </ol>
       </div>
     </section>
@@ -129,7 +130,28 @@
       </div>
     </section>
 
-    <section class="seccion invertida" aria-labelledby="tipo-titulo">
+    <section class="seccion invertida" aria-labelledby="movimiento-titulo">
+      <div class="contenedor">
+        <h2 id="movimiento-titulo">Movimiento: de su web actual a esta propuesta</h2>
+        <p class="seccion-intro">Inventario del código servido por ardomarketing.com (medido el 28-09-2026) y cómo lo resuelve este concepto.</p>
+        <div class="table-wrap" tabindex="0" role="region" aria-label="Comparativa de animaciones">
+          <table class="tabla-sistema tabla-movimiento">
+            <thead><tr><th scope="col">Su web hoy</th><th scope="col">Qué provoca</th><th scope="col">En esta propuesta</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Slider Revolution <span class="dato">170 KB de JS</span></th><td>El hero es un lienzo de escritorio escalado: en un móvil el botón principal mide 65 × 11 px con texto de 4 px.</td><td>Hero en HTML real con titular que se revela por líneas en CSS. Botón de 350 × 52 px. <span class="dato">0 KB de JS</span></td></tr>
+              <tr><th scope="row">WOW.js + Waypoints <span class="dato">35 elementos, 7 retardos</span></th><td>Casi todo aparece con retraso y a destiempo; el contenido está oculto hasta que el script lo muestra.</td><td>Aparición ligada al scroll con <code>animation-timeline</code>: la calcula el navegador, sin JS, y el contenido siempre existe.</td></tr>
+              <tr><th scope="row">Efecto de agua, flotación, revelado y anime.js <span class="dato">4 librerías</span></th><td>Efectos decorativos que compiten con el mensaje y con el botón de contacto.</td><td>3 efectos en bucle con propósito; los demás ocurren una sola vez. Solo se anima el ambiente del tema visible.</td></tr>
+              <tr><th scope="row">SoundJS + efecto de sonido <span class="dato">14 KB</span></th><td>Una librería de audio para efectos de interfaz que nadie pidió.</td><td>Sin sonido. La interfaz no sorprende con audio.</td></tr>
+              <tr><th scope="row">Movimiento reducido</th><td>Ninguna de sus cinco librerías de animación principales consulta <code>prefers-reduced-motion</code>.</td><td>Todo el movimiento lo respeta y, además, el panel "Ajustes de lectura" permite pausarlo desde la propia página.</td></tr>
+              <tr><th scope="row">En móvil</th><td>Los efectos dependen del ratón o del slider escalado.</td><td>En pantallas táctiles el scroll sustituye al cursor: las tarjetas se iluminan, los iconos entran y la diana gira al desplazarse.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="nota-sistema">Total de JavaScript de animación: <strong>≈ 205 KB comprimidos</strong> en su web frente a <strong>≈ 5 KB</strong> de JavaScript en toda esta propuesta, con formulario y ajustes incluidos.</p>
+      </div>
+    </section>
+
+    <section class="seccion" aria-labelledby="tipo-titulo">
       <div class="contenedor">
         <h2 id="tipo-titulo">Tipografía</h2>
         <div class="tipos">

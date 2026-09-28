@@ -1,0 +1,200 @@
+/* Estilos exclusivos de sistema.html: separados para que la home no los descargue.
+   Se publica sistema.min.css (node .claude/herramientas/construir.js). Usa los tokens de estilos.css. */
+
+/* --------------------------------------------------------------------------
+   Página del sistema visual (sistema.html)
+   -------------------------------------------------------------------------- */
+.sistema-titulo {
+  max-width: 18ch;
+  margin-bottom: 20px;
+  font-size: clamp(2.4rem, 5.5vw, 4.5rem);
+  font-weight: 800;
+}
+
+.sistema-lede {
+  max-width: 62ch;
+  margin: 0 0 48px;
+  color: var(--texto-2);
+  font-size: 1.15rem;
+}
+
+.principios {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.principios li {
+  padding: 28px;
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  background: var(--superficie);
+}
+
+.principios h2 {
+  margin-bottom: 10px;
+  font-size: 1.4rem;
+}
+
+.principios p {
+  margin: 0;
+  color: var(--texto-2);
+}
+
+.muestras {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 16px;
+  margin: 32px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.muestra {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.muestra-color {
+  height: 96px;
+  margin-bottom: 8px;
+  border: 1px solid var(--borde);
+  border-radius: 14px;
+}
+
+.m-fondo { background: var(--fondo); }
+.m-superficie { background: var(--superficie); }
+.m-texto { background: var(--texto); }
+.m-texto-2 { background: var(--texto-2); }
+.m-acento { background: var(--acento); }
+.m-naranja { background: var(--naranja); }
+
+.muestra-nombre {
+  font-family: var(--mono);
+  font-weight: 500;
+}
+
+.muestra-uso {
+  color: var(--texto-2);
+  font-size: 0.9rem;
+}
+
+.tablas-contraste {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 480px), 1fr));
+  gap: 20px;
+  margin-top: 32px;
+}
+
+.pagina-sistema .table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  background: var(--superficie);
+}
+
+.tabla-sistema {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.tabla-sistema caption {
+  padding: 16px 18px 4px;
+  text-align: left;
+  font-weight: 800;
+}
+
+.tabla-sistema th,
+.tabla-sistema td {
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--borde);
+  text-align: left;
+  vertical-align: top;
+}
+
+.tabla-sistema thead th {
+  color: var(--texto-2);
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.tabla-sistema tbody th {
+  font-weight: 600;
+}
+
+.tabla-sistema code,
+.nota-sistema code {
+  font-family: var(--mono);
+  font-size: 0.85em;
+}
+
+.tabla-sistema .num {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.nota-sistema {
+  max-width: 80ch;
+  margin: 24px 0 0;
+  color: var(--texto-2);
+}
+
+.tipos {
+  display: grid;
+  gap: 6px;
+  margin-top: 32px;
+}
+
+.tipo-muestra {
+  margin: 20px 0 0;
+}
+
+.tipo-display {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.05em;
+}
+
+.tipo-texto {
+  max-width: 50ch;
+  font-size: 1.15rem;
+}
+
+.tipo-mono {
+  font-family: var(--mono);
+  font-size: 2rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--acento);
+}
+
+.tipo-meta {
+  margin: 0;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--borde);
+  color: var(--texto-2);
+  font-family: var(--mono);
+  font-size: 0.85rem;
+}
+
+/* Comparativa de movimiento: filas altas y legibles, con el dato destacado */
+.tabla-movimiento td,
+.tabla-movimiento th {
+  min-width: 200px;
+}
+
+.tabla-movimiento .dato {
+  display: block;
+  margin-top: 4px;
+  color: var(--acento);
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  font-weight: 500;
+}

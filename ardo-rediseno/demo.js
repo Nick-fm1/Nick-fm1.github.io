@@ -152,12 +152,34 @@ if (!sinMovimiento() && 'IntersectionObserver' in window) {
 }
 
 // --- Interacciones de puntero (solo ratón/trackpad y sin movimiento reducido) -------
+/**
+ * Agrupa los eventos de puntero en un solo trabajo por fotograma: el ratón dispara más eventos que
+ * fotogramas pinta la pantalla, y cada uno leía medidas (getBoundingClientRect) y escribía estilos,
+ * lo que obliga a recalcular el layout varias veces por fotograma.
+ * @param {HTMLElement} el Elemento cuyo hover mantiene vivo el efecto
+ * @param {(e: PointerEvent) => void} fn
+ * @returns {(e: PointerEvent) => void}
+ */
+const porFotograma = (el, fn) => {
+  /** @type {PointerEvent | null} */ let ultimo = null;
+  let programado = false;
+  return (e) => {
+    ultimo = e;
+    if (programado) return;
+    programado = true;
+    requestAnimationFrame(() => {
+      programado = false;
+      // Si el puntero ya salió, el pointerleave restableció el estilo: no reescribirlo
+      if (ultimo && el.matches(':hover') && !sinMovimiento()) fn(ultimo);
+    });
+  };
+};
+
 if (punteroFino) {
   // Foco radial que sigue al cursor dentro de cada tarjeta
   document.querySelectorAll('.foco').forEach((tarjeta) => {
     const el = /** @type {HTMLElement} */ (tarjeta);
-    el.addEventListener('pointermove', (e) => {
-      if (sinMovimiento()) return;
+    el.addEventListener('pointermove', porFotograma(el, (e) => {
       const r = el.getBoundingClientRect();
       el.style.setProperty('--mx', `${e.clientX - r.left}px`);
       el.style.setProperty('--my', `${e.clientY - r.top}px`);
@@ -166,20 +188,19 @@ if (punteroFino) {
       const x = (e.clientX - r.left) / r.width - 0.5;
       const y = (e.clientY - r.top) / r.height - 0.5;
       el.style.rotate = `${-y} ${x} 0 ${Math.hypot(x, y) * 14}deg`;
-    });
+    }), { passive: true });
     el.addEventListener('pointerleave', () => { el.style.rotate = ''; });
   });
 
   // Botones magnéticos: se desplazan unos píxeles hacia el cursor
   document.querySelectorAll('.magnetico').forEach((boton) => {
     const el = /** @type {HTMLElement} */ (boton);
-    el.addEventListener('pointermove', (e) => {
-      if (sinMovimiento()) return;
+    el.addEventListener('pointermove', porFotograma(el, (e) => {
       const r = el.getBoundingClientRect();
       const dx = (e.clientX - (r.left + r.width / 2)) * 0.18;
       const dy = (e.clientY - (r.top + r.height / 2)) * 0.28;
       el.style.translate = `${dx}px ${dy}px`;
-    });
+    }), { passive: true });
     el.addEventListener('pointerleave', () => { el.style.translate = ''; });
   });
 
@@ -187,14 +208,13 @@ if (punteroFino) {
   /** @type {HTMLElement | null} */ const hero = document.querySelector('.hero');
   /** @type {HTMLElement | null} */ const diana = document.querySelector('.diana');
   if (hero && diana) {
-    hero.addEventListener('pointermove', (e) => {
-      if (sinMovimiento()) return;
+    hero.addEventListener('pointermove', porFotograma(hero, (e) => {
       const r = hero.getBoundingClientRect();
       const x = (e.clientX - r.left) / r.width - 0.5;
       const y = (e.clientY - r.top) / r.height - 0.5;
       diana.style.setProperty('--inclina-y', `${x * 14}deg`);
       diana.style.setProperty('--inclina-x', `${-y * 14}deg`);
-    });
+    }), { passive: true });
     hero.addEventListener('pointerleave', () => {
       diana.style.setProperty('--inclina-y', '0deg');
       diana.style.setProperty('--inclina-x', '0deg');
