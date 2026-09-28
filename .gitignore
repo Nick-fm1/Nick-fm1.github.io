@@ -1,14 +1,24 @@
-# Archivos del sistema
+# Lista blanca: este repositorio es el sitio público (GitHub Pages).
+# Se ignora TODO por defecto y solo se publica lo que el sitio necesita.
+# Para publicar un archivo nuevo hay que añadirlo aquí a propósito.
+/*
+
+# Sitio
+!/index.html
+!/styles.css
+!/script.js
+!/og-image.png
+!/fonts/
+
+# Documentación pública
+!/README.md
+!/guia-ardo-marketing.md
+
+# Configuración de git
+!/.gitignore
+
+# Aunque estén dentro de una carpeta permitida, nunca publicar:
+.env*
+*.log
 .DS_Store
 Thumbs.db
-
-# Configuración de editores
-.vscode/
-.idea/
-
-# Logs y temporales
-*.log
-
-# Configuración local de Claude Code y herramientas de validación (no se publica)
-.claude/
-node_modules/
