@@ -2,8 +2,11 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <!-- CSP: GitHub Pages no permite cabeceras HTTP, así que va en <meta>. El hash sha256 corresponde al script del tema de este <head>;
+       si ese script cambia, hay que recalcularlo (validar.js lo comprueba). style-src necesita unsafe-inline por los estilos de model-viewer y --score. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-6oR5AnrpBXGt3J4Vh34P1tBJOebZeQSg4a1KYK1uKxI=' https://ajax.googleapis.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' blob: https://modelviewer.dev; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Portafolio de Sebastián Moreno — Desarrollador Web especialista en UX/UI, Frontend y Productos Full-Stack. Caso destacado: auditoría de conversión, móvil y WCAG AA de ARDO Marketing.">
+  <meta name="description" content="Desarrollador web UX/UI y frontend en Colombia. Caso destacado: auditoría de conversión, móvil y accesibilidad WCAG AA para ARDO Marketing.">
   <meta name="theme-color" content="#0f172a">
   <meta name="color-scheme" content="light dark">
 
@@ -13,7 +16,7 @@
   <meta property="og:type" content="website">
   <meta property="og:locale" content="es_CO">
   <meta property="og:url" content="https://nick-fm1.github.io/">
-  <meta property="og:title" content="Sebastián Moreno — Web &amp; Product Developer">
+  <meta property="og:title" content="Sebastián Moreno — Desarrollador Web UX/UI y Frontend">
   <meta property="og:description" content="Diseño experiencias claras y las convierto en productos digitales escalables. Caso destacado: auditoría de conversión, móvil y WCAG AA de ARDO Marketing.">
   <meta property="og:image" content="https://nick-fm1.github.io/og-image.png">
   <meta property="og:image:width" content="1200">
@@ -21,7 +24,36 @@
   <meta property="og:image:alt" content="Portada del portafolio de Sebastián Moreno: Diseño experiencias claras. Las convierto en producto.">
   <meta name="twitter:card" content="summary_large_image">
 
-  <title>Sebastián Moreno — Web &amp; Product Developer</title>
+  <!-- Datos estructurados: describen a la persona y el sitio para los buscadores -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://nick-fm1.github.io/#persona",
+        "name": "Sebastián Moreno",
+        "jobTitle": "Desarrollador Web UX/UI y Frontend",
+        "url": "https://nick-fm1.github.io/",
+        "image": "https://nick-fm1.github.io/og-image.png",
+        "email": "mailto:sfmorenob@gmail.com",
+        "address": { "@type": "PostalAddress", "addressCountry": "CO" },
+        "knowsAbout": ["Diseño UX/UI", "Desarrollo frontend", "Accesibilidad web (WCAG 2.2)", "Rendimiento web", "Optimización de conversión (CRO)"],
+        "sameAs": ["https://github.com/Nick-fm1"]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://nick-fm1.github.io/#sitio",
+        "url": "https://nick-fm1.github.io/",
+        "name": "Sebastián Moreno — Portafolio",
+        "inLanguage": "es",
+        "author": { "@id": "https://nick-fm1.github.io/#persona" }
+      }
+    ]
+  }
+  </script>
+
+  <title>Sebastián Moreno — Desarrollador Web UX/UI y Frontend</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230f172a'/%3E%3Ctext x='16' y='21' font-family='monospace' font-size='14' font-weight='700' text-anchor='middle' fill='%23f8fafc'%3ESM%3C/text%3E%3C/svg%3E">
 
   <!-- Aplica el tema antes del primer pintado para evitar el destello de tema incorrecto -->

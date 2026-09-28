@@ -5,6 +5,8 @@
  */
 
 const MODEL_VIEWER_SRC = 'https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js';
+// Subresource Integrity: si el CDN sirviera otro archivo, el navegador no lo ejecuta
+const MODEL_VIEWER_SRI = 'sha384-NxrHiuPcsJaRbXc9EoFTt5OZ6WPVqKeDgcnykGs3spXmq0J7hbbGGlyUkrGuoJoA';
 const HERO_MODEL_SRC = 'https://modelviewer.dev/shared-assets/models/Astronaut.glb';
 
 const prefiereMenosMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -92,6 +94,7 @@ const cargarModelViewer = () =>
     script.type = 'module';
     script.src = MODEL_VIEWER_SRC;
     script.crossOrigin = 'anonymous';
+    script.integrity = MODEL_VIEWER_SRI;
     script.addEventListener('load', () => window.customElements.whenDefined('model-viewer').then(resolve));
     script.addEventListener('error', reject);
     document.head.append(script);

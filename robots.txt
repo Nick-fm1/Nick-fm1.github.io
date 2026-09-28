@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://nick-fm1.github.io/sitemap.xml

@@ -1,0 +1,4 @@
+# LF fijo: el hash de la CSP del script en línea depende de los bytes exactos
+* text=auto eol=lf
+*.png binary
+*.woff2 binary

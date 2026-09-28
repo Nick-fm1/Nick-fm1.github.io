@@ -10,12 +10,17 @@
 !/og-image.png
 !/fonts/
 
+# SEO
+!/robots.txt
+!/sitemap.xml
+
 # Documentación pública
 !/README.md
 !/guia-ardo-marketing.md
 
 # Configuración de git
 !/.gitignore
+!/.gitattributes
 
 # Aunque estén dentro de una carpeta permitida, nunca publicar:
 .env*
