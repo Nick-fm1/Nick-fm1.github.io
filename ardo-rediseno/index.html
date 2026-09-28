@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'none'; object-src 'none'; base-uri 'self'; upgrade-insecure-requests">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Concepto de portafolio: no debe aparecer en buscadores como si fuera el sitio de la agencia -->
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="Concepto de rediseño independiente de la home de ARDO Marketing, creado por Sebastián Moreno como caso de estudio de conversión, móvil y accesibilidad. No es el sitio oficial.">
+  <meta name="theme-color" content="#0b0d12">
+  <meta name="color-scheme" content="dark">
+  <title>Concepto de rediseño · ARDO Marketing — caso de estudio</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23fc4b08'/%3E%3Ccircle cx='16' cy='16' r='9' fill='none' stroke='%230b0d12' stroke-width='3'/%3E%3Ccircle cx='16' cy='16' r='3' fill='%230b0d12'/%3E%3C/svg%3E">
+  <link rel="preload" href="../fonts/plus-jakarta-sans-latin-var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="estilos.min.css">
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+  <div class="progreso" aria-hidden="true"></div>
+
+  <!-- Aviso: deja claro desde el primer vistazo qué es esta página -->
+  <aside class="aviso" aria-label="Aviso sobre esta página">
+    <p>
+      <strong>Concepto de rediseño independiente</strong> por Sebastián Moreno. No es el sitio oficial de ARDO Marketing ni está afiliado a la agencia; los datos de contacto son de ejemplo.
+      <a href="../#caso-ardo">Ver el caso de estudio</a>
+    </p>
+  </aside>
+
+  <header class="cabecera">
+    <div class="contenedor cabecera-fila">
+      <a class="marca" href="#inicio">
+        <img src="img/logo-blanco.webp" width="120" height="44" alt="ARDO Marketing, ir al inicio">
+      </a>
+      <nav aria-label="Principal">
+        <ul class="nav-lista">
+          <li><a href="#servicios">Servicios</a></li>
+          <li><a href="#resultados">Resultados</a></li>
+          <li><a href="#proceso">Cómo trabajamos</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+      </nav>
+      <a class="boton boton-marca boton-sm cabecera-cta magnetico" href="#contacto">Trabajemos juntos</a>
+    </div>
+  </header>
+
+  <main id="contenido">
+    <!-- HERO: HTML real (antes: slider de escritorio escalado con un CTA de 65 × 11 px) -->
+    <section class="hero" id="inicio" aria-labelledby="hero-titulo">
+      <div class="hero-grano" aria-hidden="true"></div>
+      <div class="contenedor hero-rejilla">
+        <div class="hero-copia">
+          <p class="etiqueta"><span class="punto" aria-hidden="true"></span> Agencia de marketing digital · Colombia y México</p>
+          <h1 id="hero-titulo" class="hero-titulo">
+            <span class="linea"><span>Crecer es mejor</span></span>
+            <span class="linea"><span>cuando no lo</span></span>
+            <span class="linea"><span class="acento">haces solo.</span></span>
+          </h1>
+          <p class="hero-texto">
+            Conectamos tu propósito con la audiencia correcta, fortalecemos tu presencia digital y nos convertimos en tu aliado para
+            <span class="rotador" aria-hidden="true"><span class="rotador-pista"><span>vender más.</span><span>ser visible.</span><span>ser memorable.</span><span>vender más.</span></span></span><span class="visually-hidden">vender más, ser visible y ser memorable.</span>
+          </p>
+          <div class="hero-acciones">
+            <a class="boton boton-marca magnetico" href="#contacto" data-cta="hero">
+              Trabajemos juntos
+              <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a class="boton boton-fantasma" href="#servicios">Ver servicios</a>
+          </div>
+          <p class="hero-prueba"><strong>+100</strong> clientes satisfechos son nuestra mejor garantía.</p>
+        </div>
+
+        <!-- Diana del logo: la flecha llega al centro al cargar; se inclina con el cursor -->
+        <div class="diana" aria-hidden="true">
+          <svg viewBox="0 0 400 400" class="diana-svg">
+            <circle class="anillo a1" cx="200" cy="200" r="180"/>
+            <circle class="anillo a2" cx="200" cy="200" r="132"/>
+            <circle class="anillo a3" cx="200" cy="200" r="84"/>
+            <circle class="centro" cx="200" cy="200" r="38"/>
+            <g class="flecha">
+              <line x1="200" y1="200" x2="360" y2="40"/>
+              <path d="M360 40 l-6 34 m6-34 l-34 6 M338 22 l22 18 M378 62 l-18-22"/>
+            </g>
+            <circle class="impacto" cx="200" cy="200" r="38"/>
+          </svg>
+          <div class="chip chip-1">Reconocimiento <b>80%</b></div>
+          <div class="chip chip-2">Ventas <b>70%</b></div>
+          <div class="chip chip-3">Posicionamiento <b>80%</b></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cinta en movimiento: el contenido real está en la lista de servicios; esta cinta es decorativa -->
+    <div class="cinta" aria-hidden="true">
+      <div class="cinta-pista">
+        <span>Investigación de mercados</span><span>Redes sociales</span><span>Google Ads</span><span>Meta Ads</span><span>WhatsApp Business</span><span>Posicionamiento de marca</span>
+        <span>Investigación de mercados</span><span>Redes sociales</span><span>Google Ads</span><span>Meta Ads</span><span>WhatsApp Business</span><span>Posicionamiento de marca</span>
+      </div>
+    </div>
+
+    <!-- SERVICIOS: bento con foco que sigue al cursor -->
+    <section class="seccion" id="servicios" aria-labelledby="servicios-titulo">
+      <div class="contenedor">
+        <div class="seccion-cabeza">
+          <p class="etiqueta">Servicios</p>
+          <h2 id="servicios-titulo">¿Qué podemos hacer por tu empresa?</h2>
+        </div>
+        <ul class="bento">
+          <li class="tarjeta tarjeta-grande foco">
+            <span class="tarjeta-num">01</span>
+            <svg class="tarjeta-icono" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4M8 11h6M11 8v6"/></svg>
+            <h3>Investigación de mercados digitales</h3>
+            <p>Descubre quién es realmente tu audiencia, qué piensa, qué busca y cómo se comporta antes de invertir un peso en pauta.</p>
+          </li>
+          <li class="tarjeta foco">
+            <span class="tarjeta-num">02</span>
+            <svg class="tarjeta-icono" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 12a8 8 0 1 0 16 0 8 8 0 0 0-16 0"/><path d="M12 4v16M4 12h16"/></svg>
+            <h3>Marketing digital orgánico</h3>
+            <p>Comunidad, posicionamiento y reconocimiento de marca a través de contenido estratégico.</p>
+          </li>
+          <li class="tarjeta foco">
+            <span class="tarjeta-num">03</span>
+            <svg class="tarjeta-icono" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>
+            <h3>Publicidad digital</h3>
+            <p>Campañas en Google Ads y Meta Ads orientadas a resultados medibles, por planes.</p>
+          </li>
+          <li class="tarjeta tarjeta-ancha foco">
+            <span class="tarjeta-num">04</span>
+            <svg class="tarjeta-icono" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M21 12a9 9 0 0 1-13.5 7.8L3 21l1.2-4.5A9 9 0 1 1 21 12z"/><path d="M8.5 10.5h7M8.5 13.5h4"/></svg>
+            <h3>Capacitación en WhatsApp</h3>
+            <p>Capacitamos a tu equipo comercial y estructuramos un discurso que venda por WhatsApp Business.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- RESULTADOS: cifras que publica la agencia, con contador y barra -->
+    <section class="seccion seccion-clara" id="resultados" aria-labelledby="resultados-titulo">
+      <div class="contenedor">
+        <div class="seccion-cabeza">
+          <p class="etiqueta etiqueta-oscura">Resultados</p>
+          <h2 id="resultados-titulo">Lo que han logrado nuestros clientes.</h2>
+          <p class="seccion-intro">Acompañamos a cada empresa como un aliado estratégico. Cifras publicadas por la agencia.</p>
+        </div>
+        <ul class="cifras">
+          <li class="cifra">
+            <span class="cifra-valor"><span class="contador" data-hasta="80">80</span>%</span>
+            <span class="barra" aria-hidden="true"><span class="barra-relleno b80"></span></span>
+            <h3>Reconocimiento</h3>
+            <p>Impulsamos visibilidad, comunidad y conexión emocional.</p>
+          </li>
+          <li class="cifra">
+            <span class="cifra-valor"><span class="contador" data-hasta="70">70</span>%</span>
+            <span class="barra" aria-hidden="true"><span class="barra-relleno b70"></span></span>
+            <h3>Ventas</h3>
+            <p>Nos unimos a sus objetivos comerciales para mirar hacia una misma meta.</p>
+          </li>
+          <li class="cifra">
+            <span class="cifra-valor"><span class="contador" data-hasta="80">80</span>%</span>
+            <span class="barra" aria-hidden="true"><span class="barra-relleno b80"></span></span>
+            <h3>Posicionamiento</h3>
+            <p>Construimos marcas que se vuelven memorables.</p>
+          </li>
+        </ul>
+
+        <div class="testimonios-cabeza">
+          <h3 id="testimonios-titulo">El resultado de hacer las cosas con estrategia</h3>
+          <div class="carrusel-controles">
+            <button class="boton-circulo" type="button" data-carrusel="-1" aria-controls="testimonios" aria-label="Testimonio anterior">
+              <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+            </button>
+            <button class="boton-circulo" type="button" data-carrusel="1" aria-controls="testimonios" aria-label="Testimonio siguiente">
+              <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </button>
+          </div>
+        </div>
+        <ul class="testimonios" id="testimonios" tabindex="0" aria-labelledby="testimonios-titulo">
+          <li class="testimonio">
+            <blockquote>
+              <p>Ha sido un gran acierto trabajar con Ardo Marketing: nuestra marca ha recibido un excelente impulso desde que iniciamos nuestra estrategia digital.</p>
+            </blockquote>
+            <p class="testimonio-autor">Clinimedical Group</p>
+          </li>
+          <li class="testimonio">
+            <blockquote>
+              <p>Estamos muy satisfechos con el trabajo de Ardo Marketing. Sentimos que nuestras ventas se han impulsado gracias a la estrategia de comunicación digital.</p>
+            </blockquote>
+            <p class="testimonio-autor">Kalmo</p>
+          </li>
+          <li class="testimonio">
+            <blockquote>
+              <p>Ardo Marketing nos brindó una excelente propuesta que está en ejecución, y los primeros resultados nos dejan muy contentos.</p>
+            </blockquote>
+            <p class="testimonio-autor">Boreas</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- PROCESO: título fijo y pasos que se encienden al avanzar -->
+    <section class="seccion" id="proceso" aria-labelledby="proceso-titulo">
+      <div class="contenedor proceso-rejilla">
+        <div class="proceso-fijo">
+          <p class="etiqueta">Cómo trabajamos</p>
+          <h2 id="proceso-titulo">Ajustamos cada plan a tus objetivos, tus recursos y tu mercado.</h2>
+        </div>
+        <ol class="pasos">
+          <li class="paso">
+            <span class="paso-num" aria-hidden="true">01</span>
+            <h3>Investigación de mercados en el entorno digital</h3>
+            <p>Diagnóstico sin costo de tu marca, tu competencia y tus canales actuales.</p>
+          </li>
+          <li class="paso">
+            <span class="paso-num" aria-hidden="true">02</span>
+            <h3>Manejo profesional de redes sociales</h3>
+            <p>Línea editorial, calendario y contenido que construye comunidad de forma constante.</p>
+          </li>
+          <li class="paso">
+            <span class="paso-num" aria-hidden="true">03</span>
+            <h3>Pautas publicitarias por planes</h3>
+            <p>Presupuesto, objetivos y reportes claros cada mes; ajustamos con datos, no con suposiciones.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- CONTACTO: formulario accesible, consentimiento SIN premarcar y enlace a la política -->
+    <section class="seccion contacto" id="contacto" aria-labelledby="contacto-titulo">
+      <div class="contenedor contacto-rejilla">
+        <div>
+          <p class="etiqueta etiqueta-oscura">Contacto</p>
+          <h2 id="contacto-titulo">Contacta a un equipo completo que se convierte en parte de tu marca.</h2>
+          <p>Te respondemos en menos de un día hábil con una propuesta de diagnóstico.</p>
+          <ul class="canales">
+            <li><span class="canal-etiqueta">WhatsApp</span> +57 300 000 0000 <span class="ejemplo">(ejemplo)</span></li>
+            <li><span class="canal-etiqueta">Correo</span> contacto@ardo.example <span class="ejemplo">(ejemplo)</span></li>
+            <li><span class="canal-etiqueta">Horario</span> Lunes a viernes, 9:00 a. m. – 5:00 p. m.</li>
+          </ul>
+          <p class="nota-demo">
+            En el sitio real, cada canal sería un enlace <code>wa.me</code>, <code>mailto:</code> o <code>tel:</code>
+            con el mismo dato que se muestra (hallazgos E1–E3 del caso de estudio).
+          </p>
+        </div>
+
+        <form class="formulario" id="formulario" novalidate aria-describedby="form-nota">
+          <p class="form-nota" id="form-nota">Todos los campos son obligatorios salvo que se indique lo contrario.</p>
+
+          <div class="campo">
+            <label for="nombre">Nombre</label>
+            <input id="nombre" name="nombre" type="text" autocomplete="name" required>
+          </div>
+
+          <div class="campo">
+            <label for="correo">Correo</label>
+            <input id="correo" name="correo" type="email" autocomplete="email" required placeholder="nombre@empresa.com" aria-describedby="correo-error">
+            <p class="error" id="correo-error" hidden>Escribe un correo válido, por ejemplo nombre@empresa.com.</p>
+          </div>
+
+          <div class="campo">
+            <label for="whatsapp">WhatsApp <span class="opcional">(opcional)</span></label>
+            <input id="whatsapp" name="whatsapp" type="tel" autocomplete="tel" inputmode="tel">
+          </div>
+
+          <div class="campo">
+            <label for="mensaje">¿Qué quieres lograr?</label>
+            <textarea id="mensaje" name="mensaje" rows="4" required></textarea>
+          </div>
+
+          <div class="campo campo-casilla">
+            <input id="consentimiento" name="consentimiento" type="checkbox" required aria-describedby="consentimiento-error">
+            <label for="consentimiento">
+              Autorizo el tratamiento de mis datos según la <a href="#privacidad">política de privacidad</a>.
+            </label>
+            <p class="error" id="consentimiento-error" hidden>Necesitamos tu autorización para responderte.</p>
+          </div>
+
+          <button class="boton boton-oscuro boton-ancho" type="submit">Enviar mensaje</button>
+          <p class="form-estado" id="form-estado" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+
+    <section class="privacidad" id="privacidad" aria-labelledby="privacidad-titulo">
+      <div class="contenedor">
+        <h2 id="privacidad-titulo">Política de privacidad (resumen de ejemplo)</h2>
+        <p>
+          En el sitio real, aquí se publicaría la política de tratamiento de datos exigida por la Ley 1581 de 2012:
+          responsable, finalidad, derechos del titular y canal para ejercerlos. En este concepto, el formulario no envía ni guarda ningún dato.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="pie">
+    <div class="contenedor pie-rejilla">
+      <img src="img/logo-naranja.webp" width="140" height="51" alt="ARDO Marketing" loading="lazy">
+      <p>
+        Concepto de rediseño independiente por <a href="../">Sebastián Moreno</a>. No es el sitio oficial de ARDO Marketing.
+        <a href="../#caso-ardo">Volver al caso de estudio</a>
+      </p>
+    </div>
+  </footer>
+
+  <!-- Barra de contacto fija en móvil: el CTA siempre a un pulgar de distancia -->
+  <aside class="barra-movil" aria-label="Contacto rápido">
+    <a class="boton boton-marca boton-ancho" href="#contacto">Trabajemos juntos</a>
+  </aside>
+
+  <script src="demo.js" defer></script>
+</body>
+</html>

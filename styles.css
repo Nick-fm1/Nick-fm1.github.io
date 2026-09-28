@@ -1501,6 +1501,19 @@ p.compare-criteria {
   flex-shrink: 0;
 }
 
+.case-footer-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.results-footnote {
+  max-width: 80ch;
+  margin: 12px 0 0;
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
 /* ==========================================================================
    11. MEDIA QUERIES (DISEÑO RESPONSIVE)
    ========================================================================== */

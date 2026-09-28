@@ -308,8 +308,8 @@
           </li>
           <li class="star-card star-card--result">
             <span class="star-letter" aria-hidden="true">R</span>
-            <h3>Resultado <span class="pill">proyectado</span></h3>
-            <p>Las correcciones P0 (4 atributos <code>href</code>, menos de 1 hora) restablecen el 100 % de los contactos iniciados desde la home. Objetivos: 0 fallos WCAG serios y LCP ≤ 2,5 s.</p>
+            <h3>Resultado <span class="pill">medido en el concepto</span></h3>
+            <p>Construí el rediseño como prototipo independiente y lo medí con las mismas herramientas: Rendimiento 57 → 99, LCP 11,5 → 1,7 s, fallos WCAG serios 39 → 0 y CTA de 65 × 11 a 350 × 52 px, con animaciones que respetan el movimiento reducido.</p>
           </li>
         </ol>
 
@@ -422,36 +422,44 @@
         <div class="results">
           <h3 class="case-subtitle">Métricas clave</h3>
           <p class="results-note">
-            <strong>Antes</strong> está medido en producción. <strong>Objetivo</strong> es una proyección con su base de cálculo: la propuesta todavía no está desplegada en el sitio de ARDO.
+            Las dos columnas están <strong>medidas</strong> con Lighthouse móvil (mediana de 3) y axe-core a 390 px, el 28-09-2026. El concepto es un prototipo independiente publicado en este portafolio: el sitio real de ARDO no ha cambiado.
           </p>
           <!-- role="region" + tabindex: contenedor con scroll horizontal operable por teclado (patrón recomendado para tablas anchas) -->
-          <div class="table-wrap" tabindex="0" role="region" aria-label="Tabla de métricas antes y objetivo">
+          <div class="table-wrap" tabindex="0" role="region" aria-label="Tabla de métricas: sitio actual frente al concepto rediseñado">
             <table class="results-table">
               <thead>
                 <tr>
                   <th scope="col">Métrica</th>
-                  <th scope="col">Antes <span class="th-sub">medido</span></th>
-                  <th scope="col">Objetivo <span class="th-sub">proyectado</span></th>
+                  <th scope="col">ardomarketing.com <span class="th-sub">medido</span></th>
+                  <th scope="col">Concepto rediseñado <span class="th-sub">medido</span></th>
                 </tr>
               </thead>
               <tbody>
-                <tr><th scope="row">Canales de contacto funcionales</th><td class="val-bad">0 / 3</td><td class="val-good">3 / 3</td></tr>
-                <tr><th scope="row">CTA principal en móvil</th><td class="val-bad">65 × 11 px</td><td class="val-good">≥ 44 × 44 px</td></tr>
+                <tr><th scope="row">Contacto que llega a la agencia</th><td class="val-bad">0 / 3 canales</td><td class="val-good">Formulario accesible*</td></tr>
+                <tr><th scope="row">CTA principal en móvil</th><td class="val-bad">65 × 11 px</td><td class="val-good">350 × 52 px</td></tr>
                 <tr><th scope="row">Fallos axe críticos y serios</th><td class="val-bad">39</td><td class="val-good">0</td></tr>
-                <tr><th scope="row">Lighthouse Rendimiento (móvil)</th><td class="val-bad">57</td><td class="val-good">≥ 90</td></tr>
-                <tr><th scope="row">Largest Contentful Paint</th><td class="val-bad">11,5 s</td><td class="val-good">≤ 2,5 s</td></tr>
-                <tr><th scope="row">Lighthouse Accesibilidad</th><td>81</td><td class="val-good">≥ 95</td></tr>
+                <tr><th scope="row">Lighthouse Rendimiento (móvil)</th><td class="val-bad">57</td><td class="val-good">99</td></tr>
+                <tr><th scope="row">Largest Contentful Paint</th><td class="val-bad">11,5 s</td><td class="val-good">1,7 s</td></tr>
+                <tr><th scope="row">Lighthouse Accesibilidad</th><td>81</td><td class="val-good">100</td></tr>
+                <tr><th scope="row">Peso de la página</th><td class="val-bad">2,4 MB · 123 peticiones</td><td class="val-good">88 KiB · 7 peticiones</td></tr>
                 <tr><th scope="row">Enlaces vacíos</th><td class="val-bad">28</td><td class="val-good">0</td></tr>
+                <tr><th scope="row">Consentimiento premarcado</th><td class="val-bad">Sí</td><td class="val-good">No</td></tr>
               </tbody>
             </table>
           </div>
+          <p class="results-footnote">* Es un concepto independiente: los datos de contacto son de ejemplo y el formulario no envía nada. En el sitio real, cada canal enlazaría al mismo dato que muestra (hallazgos E1–E3).</p>
         </div>
 
         <div class="case-footer">
-          <p>La auditoría completa incluye la metodología, cada hallazgo con su criterio WCAG, el código de cada solución y el plan de implementación priorizado.</p>
-          <a class="button button-primary" href="https://github.com/Nick-fm1/Nick-fm1.github.io/blob/main/guia-ardo-marketing.md">
-            Leer la auditoría técnica <span aria-hidden="true">↗</span>
-          </a>
+          <p>Explora el rediseño funcionando, o lee la auditoría completa: metodología, cada hallazgo con su criterio WCAG, el código de cada solución y el plan priorizado.</p>
+          <div class="case-footer-actions">
+            <a class="button button-primary" href="ardo-rediseno/">
+              Ver ARDO rediseñado <span aria-hidden="true">→</span>
+            </a>
+            <a class="button button-outline" href="https://github.com/Nick-fm1/Nick-fm1.github.io/blob/main/guia-ardo-marketing.md">
+              Leer la auditoría técnica <span aria-hidden="true">↗</span>
+            </a>
+          </div>
         </div>
       </div>
     </section>
